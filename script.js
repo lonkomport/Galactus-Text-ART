@@ -2,52 +2,68 @@
 // ELEMENTOS DO HTML
 // =========================================
 
-const imageInput = document.getElementById("imageInput");
+const imageInput =
+    document.getElementById("imageInput");
 
-const characterInput = document.getElementById("character");
+const uploadButton =
+    document.getElementById("uploadButton");
 
-const widthInput = document.getElementById("width");
-const widthValue = document.getElementById("widthValue");
+const fileName =
+    document.getElementById("fileName");
 
-const contrastInput = document.getElementById("contrast");
-const contrastValue = document.getElementById("contrastValue");
+const characterInput =
+    document.getElementById("character");
 
-const invertInput = document.getElementById("invert");
+const widthInput =
+    document.getElementById("width");
 
-const output = document.getElementById("output");
+const widthValue =
+    document.getElementById("widthValue");
 
-const copyButton = document.getElementById("copyButton");
+const contrastInput =
+    document.getElementById("contrast");
 
-const canvas = document.getElementById("canvas");
+const contrastValue =
+    document.getElementById("contrastValue");
 
+const brightnessInput =
+    document.getElementById("brightness");
 
-// =========================================
-// VERIFICAR ELEMENTOS
-// =========================================
+const brightnessValue =
+    document.getElementById("brightnessValue");
 
-if (
-    !imageInput ||
-    !characterInput ||
-    !widthInput ||
-    !widthValue ||
-    !contrastInput ||
-    !contrastValue ||
-    !invertInput ||
-    !output ||
-    !copyButton ||
-    !canvas
-) {
-    console.error(
-        "Erro: um ou mais elementos do HTML não foram encontrados."
-    );
-}
+const densityInput =
+    document.getElementById("density");
 
+const densityValue =
+    document.getElementById("densityValue");
 
-// =========================================
-// CONTEXTO DO CANVAS
-// =========================================
+const modeInput =
+    document.getElementById("mode");
 
-const ctx = canvas.getContext("2d");
+const invertInput =
+    document.getElementById("invert");
+
+const output =
+    document.getElementById("output");
+
+const copyButton =
+    document.getElementById("copyButton");
+
+const clearButton =
+    document.getElementById("clearButton");
+
+const emptyMessage =
+    document.getElementById("emptyMessage");
+
+const resultInfo =
+    document.getElementById("resultInfo");
+
+const canvas =
+    document.getElementById("canvas");
+
+const ctx =
+    canvas.getContext("2d");
 
 
 // =========================================
@@ -55,6 +71,24 @@ const ctx = canvas.getContext("2d");
 // =========================================
 
 let imagem = null;
+
+
+// =========================================
+// PALETAS DE CARACTERES
+// =========================================
+
+const PALETAS = {
+
+    dots:
+        " ·:+*#%@",
+
+    ascii:
+        " .:-=+*#%@",
+
+    blocks:
+        " ░▒▓█"
+
+};
 
 
 // =========================================
@@ -74,90 +108,83 @@ imageInput.addEventListener(
         }
 
 
-        // Verificar se é imagem
-
         if (!arquivo.type.startsWith("image/")) {
 
             alert(
-                "Por favor, selecione uma imagem."
+                "Selecione um arquivo de imagem válido."
             );
 
             return;
         }
 
 
-        console.log(
-            "Imagem selecionada:",
-            arquivo.name
-        );
+        fileName.textContent =
+            arquivo.name;
 
-
-        // Criar leitor
 
         const reader =
             new FileReader();
 
 
-        reader.onload = function (event) {
+        reader.onload =
+            function (event) {
 
-            imagem = new Image();
-
-
-            imagem.onload = function () {
-
-                console.log(
-                    "Imagem carregada:",
-                    imagem.width,
-                    "x",
-                    imagem.height
-                );
+                imagem =
+                    new Image();
 
 
-                converterImagem();
+                imagem.onload =
+                    function () {
+
+                        console.log(
+                            "Imagem carregada:",
+                            imagem.width,
+                            "x",
+                            imagem.height
+                        );
+
+
+                        converterImagem();
+
+                    };
+
+
+                imagem.onerror =
+                    function () {
+
+                        alert(
+                            "Não foi possível carregar a imagem."
+                        );
+
+                    };
+
+
+                imagem.src =
+                    event.target.result;
 
             };
 
 
-            imagem.onerror = function () {
-
-                console.error(
-                    "Erro ao carregar a imagem."
-                );
+        reader.onerror =
+            function () {
 
                 alert(
-                    "Não foi possível carregar essa imagem."
+                    "Não foi possível ler o arquivo."
                 );
 
             };
 
 
-            imagem.src =
-                event.target.result;
-
-        };
-
-
-        reader.onerror = function () {
-
-            console.error(
-                "Erro ao ler o arquivo."
-            );
-
-            alert(
-                "Não foi possível ler essa imagem."
-            );
-
-        };
-
-
-        reader.readAsDataURL(arquivo);
+        reader.readAsDataURL(
+            arquivo
+        );
 
     }
 );
 
 
 // =========================================
-// ATUALIZAR LARGURA
+// LARGURA
 // =========================================
 
 widthInput.addEventListener(
@@ -174,7 +201,7 @@ widthInput.addEventListener(
 
 
 // =========================================
-// ATUALIZAR CONTRASTE
+// CONTRASTE
 // =========================================
 
 contrastInput.addEventListener(
@@ -183,6 +210,54 @@ contrastInput.addEventListener(
 
         contrastValue.textContent =
             this.value;
+
+        converterImagem();
+
+    }
+);
+
+
+// =========================================
+// BRILHO
+// =========================================
+
+brightnessInput.addEventListener(
+    "input",
+    function () {
+
+        brightnessValue.textContent =
+            this.value;
+
+        converterImagem();
+
+    }
+);
+
+
+// =========================================
+// DENSIDADE
+// =========================================
+
+densityInput.addEventListener(
+    "input",
+    function () {
+
+        densityValue.textContent =
+            this.value;
+
+        converterImagem();
+
+    }
+);
+
+
+// =========================================
+// MODO
+// =========================================
+
+modeInput.addEventListener(
+    "change",
+    function () {
 
         converterImagem();
 
@@ -205,7 +280,7 @@ invertInput.addEventListener(
 
 
 // =========================================
-// ALTERAR CARACTERE
+// CARACTERE PERSONALIZADO
 // =========================================
 
 characterInput.addEventListener(
@@ -241,17 +316,27 @@ function converterImagem() {
         parseInt(contrastInput.value);
 
 
+    const brilhoExtra =
+        parseInt(brightnessInput.value);
+
+
+    const densidade =
+        parseInt(densityInput.value);
+
+
     const inverter =
         invertInput.checked;
+
+
+    const modo =
+        modeInput.value;
 
 
     let caractere =
         characterInput.value;
 
 
-    // Se o usuário apagar o caractere
-
-    if (caractere.length === 0) {
+    if (!caractere) {
 
         caractere = "●";
 
@@ -259,18 +344,19 @@ function converterImagem() {
 
 
     // -----------------------------------------
-    // CALCULAR PROPORÇÃO
+    // PROPORÇÃO
     // -----------------------------------------
 
     const proporcao =
-        imagem.height / imagem.width;
+        imagem.height /
+        imagem.width;
 
 
     /*
-        Caracteres monoespaçados geralmente
-        são mais altos que largos.
+        Caracteres de texto são mais altos
+        do que largos.
 
-        O fator 0.5 corrige a proporção.
+        0.5 corrige essa diferença.
     */
 
     const altura =
@@ -285,7 +371,7 @@ function converterImagem() {
 
 
     // -----------------------------------------
-    // CONFIGURAR CANVAS
+    // CANVAS
     // -----------------------------------------
 
     canvas.width =
@@ -294,10 +380,6 @@ function converterImagem() {
     canvas.height =
         altura;
 
-
-    // -----------------------------------------
-    // LIMPAR CANVAS
-    // -----------------------------------------
 
     ctx.clearRect(
         0,
@@ -331,6 +413,14 @@ function converterImagem() {
             largura,
             altura
         ).data;
+
+
+    // -----------------------------------------
+    // PALETA
+    // -----------------------------------------
+
+    let paleta =
+        PALETAS[modo];
 
 
     // -----------------------------------------
@@ -376,7 +466,7 @@ function converterImagem() {
             // LUMINOSIDADE
             // ---------------------------------
 
-            let brilho =
+            let luminosidade =
                 0.299 * vermelho +
                 0.587 * verde +
                 0.114 * azul;
@@ -388,18 +478,36 @@ function converterImagem() {
 
             if (alpha < 128) {
 
-                brilho = 255;
+                luminosidade = 255;
 
             }
+
+
+            // ---------------------------------
+            // BRILHO
+            // ---------------------------------
+
+            luminosidade +=
+                brilhoExtra;
+
+
+            luminosidade =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        luminosidade
+                    )
+                );
 
 
             // ---------------------------------
             // CONTRASTE
             // ---------------------------------
 
-            brilho =
+            luminosidade =
                 aplicarContraste(
-                    brilho,
+                    luminosidade,
                     contraste
                 );
 
@@ -410,34 +518,99 @@ function converterImagem() {
 
             if (inverter) {
 
-                brilho =
-                    255 - brilho;
+                luminosidade =
+                    255 - luminosidade;
 
             }
 
 
             // ---------------------------------
-            // CONVERTER PARA CARACTERE
+            // DENSIDADE
             // ---------------------------------
 
-            const limite = 128;
+            /*
+                density controla a intensidade
+                geral dos caracteres.
+
+                Valores menores deixam a imagem
+                mais "leve".
+
+                Valores maiores deixam a imagem
+                mais preenchida.
+            */
+
+            const densidadeNormalizada =
+                densidade / 100;
 
 
-            if (brilho < limite) {
+            luminosidade =
+                128 +
+                (
+                    luminosidade -
+                    128
+                ) / densidadeNormalizada;
 
-                resultado +=
-                    caractere;
 
-            } else {
+            luminosidade =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        luminosidade
+                    )
+                );
 
-                resultado += " ";
+
+            // ---------------------------------
+            // MAPEAR PARA CARACTERE
+            // ---------------------------------
+
+            const indiceCaractere =
+                Math.floor(
+                    (
+                        luminosidade / 255
+                    ) *
+                    (
+                        paleta.length - 1
+                    )
+                );
+
+
+            let caractereFinal =
+                paleta[indiceCaractere];
+
+
+            // ---------------------------------
+            // CARACTERE PERSONALIZADO
+            // ---------------------------------
+
+            if (modo === "dots") {
+
+                /*
+                    Mantemos o caractere personalizado
+                    para os pontos mais fortes.
+                */
+
+                if (
+                    indiceCaractere >=
+                    Math.floor(
+                        paleta.length * 0.65
+                    )
+                ) {
+
+                    caractereFinal =
+                        caractere;
+
+                }
 
             }
+
+
+            resultado +=
+                caractereFinal;
 
         }
 
-
-        // Quebra de linha
 
         resultado += "\n";
 
@@ -451,11 +624,31 @@ function converterImagem() {
     output.textContent =
         resultado;
 
+
+    // -----------------------------------------
+    // OCULTAR EMPTY STATE
+    // -----------------------------------------
+
+    emptyMessage.style.display =
+        "none";
+
+
+    // -----------------------------------------
+    // INFORMAÇÕES
+    // -----------------------------------------
+
+    const totalCaracteres =
+        resultado.length;
+
+
+    resultInfo.textContent =
+        `${totalCaracteres.toLocaleString("pt-BR")} caracteres`;
+
 }
 
 
 // =========================================
-// APLICAR CONTRASTE
+// CONTRASTE
 // =========================================
 
 function aplicarContraste(
@@ -470,34 +663,25 @@ function aplicarContraste(
     brilho =
         128 +
         fator *
-        (brilho - 128);
+        (
+            brilho -
+            128
+        );
 
 
-    // Limite inferior
-
-    if (brilho < 0) {
-
-        brilho = 0;
-
-    }
-
-
-    // Limite superior
-
-    if (brilho > 255) {
-
-        brilho = 255;
-
-    }
-
-
-    return brilho;
+    return Math.max(
+        0,
+        Math.min(
+            255,
+            brilho
+        )
+    );
 
 }
 
 
 // =========================================
-// COPIAR TEXTO
+// COPIAR
 // =========================================
 
 copyButton.addEventListener(
@@ -521,7 +705,7 @@ copyButton.addEventListener(
                 .writeText(texto);
 
 
-            const textoOriginal =
+            const original =
                 copyButton.textContent;
 
 
@@ -533,7 +717,7 @@ copyButton.addEventListener(
                 function () {
 
                     copyButton.textContent =
-                        textoOriginal;
+                        original;
 
                 },
                 1500
@@ -548,69 +732,123 @@ copyButton.addEventListener(
             );
 
 
-            // Fallback para navegadores
-            // que bloqueiam clipboard
-
-            const textarea =
-                document.createElement(
-                    "textarea"
-                );
-
-
-            textarea.value =
-                texto;
-
-
-            textarea.style.position =
-                "fixed";
-
-            textarea.style.opacity =
-                "0";
-
-
-            document.body.appendChild(
-                textarea
-            );
-
-
-            textarea.select();
-
-
-            try {
-
-                document.execCommand(
-                    "copy"
-                );
-
-                copyButton.textContent =
-                    "COPIADO!";
-
-
-                setTimeout(
-                    function () {
-
-                        copyButton.textContent =
-                            "COPIAR TEXTO";
-
-                    },
-                    1500
-                );
-
-            } catch (fallbackError) {
-
-                console.error(
-                    "Fallback de cópia também falhou:",
-                    fallbackError
-                );
-
-            }
-
-
-            document.body.removeChild(
-                textarea
-            );
+            copiarFallback(texto);
 
         }
+
+    }
+);
+
+
+// =========================================
+// FALLBACK DE CÓPIA
+// =========================================
+
+function copiarFallback(texto) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.value =
+        texto;
+
+
+    textarea.style.position =
+        "fixed";
+
+    textarea.style.opacity =
+        "0";
+
+
+    document.body.appendChild(
+        textarea
+    );
+
+
+    textarea.select();
+
+
+    try {
+
+        document.execCommand(
+            "copy"
+        );
+
+
+        copyButton.textContent =
+            "COPIADO!";
+
+
+        setTimeout(
+            function () {
+
+                copyButton.textContent =
+                    "COPIAR TEXTO";
+
+            },
+            1500
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao copiar:",
+            erro
+        );
+
+    }
+
+
+    document.body.removeChild(
+        textarea
+    );
+
+}
+
+
+// =========================================
+// LIMPAR
+// =========================================
+
+clearButton.addEventListener(
+    "click",
+    function () {
+
+        imagem = null;
+
+        imageInput.value = "";
+
+        fileName.textContent =
+            "NENHUMA IMAGEM SELECIONADA";
+
+
+        output.textContent =
+            "";
+
+
+        emptyMessage.style.display =
+            "flex";
+
+
+        resultInfo.textContent =
+            "0 caracteres";
+
+
+        canvas.width = 1;
+
+        canvas.height = 1;
+
+
+        ctx.clearRect(
+            0,
+            0,
+            1,
+            1
+        );
 
     }
 );

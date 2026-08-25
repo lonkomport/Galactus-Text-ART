@@ -11,7 +11,10 @@
 
     <title>Galactus Text Art</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
@@ -24,11 +27,25 @@
 
         <header class="header">
 
-            <h1>GALACTUS TEXT ART</h1>
+            <div class="brand">
 
-            <p>
-                Converta imagens em texto pontilhado
-            </p>
+                <h1>
+                    GALACTUS
+                    <br>
+                    TEXT ART
+                </h1>
+
+                <p>
+                    Converta imagens em
+                    <br>
+                    texto pontilhado
+                </p>
+
+            </div>
+
+            <div class="version">
+                V2.0
+            </div>
 
         </header>
 
@@ -49,16 +66,32 @@
                 <label
                     for="imageInput"
                     class="upload-button"
+                    id="uploadButton"
                 >
-                    SELECIONAR IMAGEM
+
+                    <span class="upload-icon">
+                        +
+                    </span>
+
+                    <span>
+                        ADICIONAR IMAGEM
+                    </span>
+
                 </label>
 
                 <input
                     type="file"
                     id="imageInput"
-                    accept="image/*"
+                    accept="image/png,image/jpeg,image/webp,image/gif"
                     hidden
                 >
+
+                <div
+                    class="file-name"
+                    id="fileName"
+                >
+                    NENHUMA IMAGEM SELECIONADA
+                </div>
 
             </div>
 
@@ -70,9 +103,9 @@
             <div class="controls">
 
 
-                <!-- CARACTERE -->
+                <!-- CARACTERES -->
 
-                <div class="control">
+                <div class="control character-control">
 
                     <label for="character">
                         CARACTERE
@@ -92,21 +125,25 @@
 
                 <div class="control">
 
-                    <label for="width">
-                        LARGURA
-                    </label>
+                    <div class="control-title">
+
+                        <label for="width">
+                            LARGURA
+                        </label>
+
+                        <span id="widthValue">
+                            80
+                        </span>
+
+                    </div>
 
                     <input
                         type="range"
                         id="width"
                         min="20"
-                        max="150"
+                        max="180"
                         value="80"
                     >
-
-                    <span id="widthValue">
-                        80
-                    </span>
 
                 </div>
 
@@ -115,9 +152,17 @@
 
                 <div class="control">
 
-                    <label for="contrast">
-                        CONTRASTE
-                    </label>
+                    <div class="control-title">
+
+                        <label for="contrast">
+                            CONTRASTE
+                        </label>
+
+                        <span id="contrastValue">
+                            100
+                        </span>
+
+                    </div>
 
                     <input
                         type="range"
@@ -127,9 +172,86 @@
                         value="100"
                     >
 
-                    <span id="contrastValue">
-                        100
-                    </span>
+                </div>
+
+
+                <!-- BRILHO -->
+
+                <div class="control">
+
+                    <div class="control-title">
+
+                        <label for="brightness">
+                            BRILHO
+                        </label>
+
+                        <span id="brightnessValue">
+                            0
+                        </span>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="brightness"
+                        min="-100"
+                        max="100"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <!-- DENSIDADE -->
+
+                <div class="control">
+
+                    <div class="control-title">
+
+                        <label for="density">
+                            DENSIDADE
+                        </label>
+
+                        <span id="densityValue">
+                            100
+                        </span>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="density"
+                        min="20"
+                        max="200"
+                        value="100"
+                    >
+
+                </div>
+
+
+                <!-- MODO -->
+
+                <div class="control">
+
+                    <label for="mode">
+                        MODO
+                    </label>
+
+                    <select id="mode">
+
+                        <option value="dots">
+                            PONTILHADO
+                        </option>
+
+                        <option value="ascii">
+                            ASCII
+                        </option>
+
+                        <option value="blocks">
+                            BLOCOS
+                        </option>
+
+                    </select>
 
                 </div>
 
@@ -142,10 +264,16 @@
                         INVERTER
                     </label>
 
-                    <input
-                        type="checkbox"
-                        id="invert"
-                    >
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="invert"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
 
                 </div>
 
@@ -160,17 +288,63 @@
 
                 <div class="result-header">
 
-                    <span>
-                        RESULTADO
-                    </span>
+                    <div>
 
-                    <button id="copyButton">
-                        COPIAR TEXTO
-                    </button>
+                        <span class="result-title">
+                            RESULTADO
+                        </span>
+
+                        <span
+                            class="result-info"
+                            id="resultInfo"
+                        >
+                            0 caracteres
+                        </span>
+
+                    </div>
+
+                    <div class="result-actions">
+
+                        <button
+                            id="clearButton"
+                            class="secondary-button"
+                        >
+                            LIMPAR
+                        </button>
+
+                        <button
+                            id="copyButton"
+                            class="primary-button"
+                        >
+                            COPIAR TEXTO
+                        </button>
+
+                    </div>
 
                 </div>
 
-                <pre id="output"></pre>
+
+                <div class="output-wrapper">
+
+                    <pre id="output"></pre>
+
+                    <div
+                        id="emptyMessage"
+                        class="empty-message"
+                    >
+                        <span>+</span>
+
+                        <p>
+                            ADICIONE UMA IMAGEM
+                        </p>
+
+                        <small>
+                            O resultado aparecerá aqui
+                        </small>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -180,7 +354,7 @@
 
 
     <!-- =====================================
-         CANVAS INVISÍVEL
+         CANVAS
     ====================================== -->
 
     <canvas

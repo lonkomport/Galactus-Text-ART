@@ -10,27 +10,41 @@
 
 
 /* =========================================
+   ROOT
+========================================= */
+
+:root {
+    --background: #080808;
+    --surface: #101010;
+    --surface-2: #0c0c0c;
+    --border: #252525;
+    --border-light: #3a3a3a;
+
+    --text: #ffffff;
+    --muted: #777777;
+    --muted-light: #999999;
+
+    --transition: 0.2s ease;
+}
+
+
+/* =========================================
    BODY
 ========================================= */
 
 body {
     min-height: 100vh;
 
-    background: #0a0a0a;
-    color: #ffffff;
+    background: var(--background);
+
+    color: var(--text);
 
     font-family:
         Arial,
         Helvetica,
         sans-serif;
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: flex-start;
-
-    padding: 50px 30px;
+    padding: 45px 30px;
 }
 
 
@@ -40,7 +54,10 @@ body {
 
 .app {
     width: 100%;
+
     max-width: 1100px;
+
+    margin: 0 auto;
 }
 
 
@@ -49,31 +66,52 @@ body {
 ========================================= */
 
 .header {
-    width: 100%;
+    display: flex;
 
-    margin-bottom: 30px;
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 35px;
 }
 
-.header h1 {
-    font-size: 32px;
 
-    font-weight: 700;
+.brand h1 {
+    font-size: 34px;
+
+    line-height: 0.88;
 
     letter-spacing: 4px;
 
-    line-height: 1.1;
+    font-weight: 800;
 }
 
-.header p {
-    margin-top: 10px;
 
-    color: #888;
+.brand p {
+    margin-top: 14px;
 
-    font-size: 14px;
+    color: var(--muted);
 
-    letter-spacing: 1px;
+    font-size: 12px;
 
-    line-height: 1.4;
+    line-height: 1.3;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+.version {
+    color: #555;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
 }
 
 
@@ -82,13 +120,11 @@ body {
 ========================================= */
 
 .workspace {
-    width: 100%;
-
     display: flex;
 
     flex-direction: column;
 
-    gap: 20px;
+    gap: 18px;
 }
 
 
@@ -100,12 +136,54 @@ body {
     width: 100%;
 }
 
+
 .upload-button {
+    min-height: 150px;
+
     width: 100%;
 
-    min-height: 140px;
+    border: 1px dashed #383838;
 
-    border: 1px dashed #444;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #888;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    transition:
+        border-color var(--transition),
+        color var(--transition),
+        background var(--transition);
+}
+
+
+.upload-button:hover {
+    border-color: #aaa;
+
+    color: white;
+
+    background: #0d0d0d;
+}
+
+
+.upload-icon {
+    width: 34px;
+
+    height: 34px;
 
     display: flex;
 
@@ -113,28 +191,35 @@ body {
 
     align-items: center;
 
-    cursor: pointer;
+    border: 1px solid #444;
 
-    color: #aaa;
+    font-size: 20px;
 
-    font-size: 13px;
+    font-weight: normal;
 
-    font-weight: bold;
-
-    letter-spacing: 2px;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
+    line-height: 1;
 }
 
-.upload-button:hover {
-    border-color: #ffffff;
 
-    color: #ffffff;
+.upload-button:hover .upload-icon {
+    border-color: #aaa;
+}
 
-    background: #111;
+
+.file-name {
+    margin-top: 8px;
+
+    color: #555;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
 }
 
 
@@ -143,32 +228,33 @@ body {
 ========================================= */
 
 .controls {
-    width: 100%;
-
     display: grid;
 
     grid-template-columns:
+        100px
         1fr
-        2fr
-        2fr
-        120px;
+        1fr
+        1fr
+        1fr
+        130px
+        100px;
 
-    gap: 20px;
+    gap: 1px;
 
-    padding: 20px;
+    background: var(--border);
 
-    background: #111;
-
-    border: 1px solid #222;
+    border: 1px solid var(--border);
 }
 
 
-/* =========================================
-   CONTROL
-========================================= */
-
 .control {
     min-width: 0;
+
+    min-height: 105px;
+
+    padding: 16px;
+
+    background: var(--surface);
 
     display: flex;
 
@@ -176,13 +262,23 @@ body {
 
     justify-content: center;
 
-    gap: 8px;
+    gap: 12px;
 }
+
+
+.control-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
 
 .control label {
     color: #777;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: bold;
 
@@ -190,29 +286,46 @@ body {
 }
 
 
+.control-title span {
+    color: #aaa;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+}
+
+
 /* =========================================
-   CHARACTER INPUT
+   CHARACTER
 ========================================= */
 
 #character {
-    width: 55px;
+    width: 52px;
 
-    height: 38px;
+    height: 40px;
 
-    background: #0a0a0a;
+    background: #080808;
 
     border: 1px solid #333;
 
     color: white;
 
+    outline: none;
+
     text-align: center;
 
     font-size: 20px;
 
-    outline: none;
+    font-family:
+        "Courier New",
+        monospace;
 
-    transition: border-color 0.2s ease;
+    transition:
+        border-color var(--transition);
 }
+
 
 #character:focus {
     border-color: #777;
@@ -226,35 +339,150 @@ body {
 input[type="range"] {
     width: 100%;
 
+    height: 3px;
+
+    appearance: none;
+
+    background: #333;
+
+    outline: none;
+
     cursor: pointer;
+}
 
-    accent-color: white;
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+
+input[type="range"]::-moz-range-thumb {
+    width: 12px;
+
+    height: 12px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
 }
 
 
 /* =========================================
-   RANGE VALUE
+   SELECT
 ========================================= */
 
-.control span {
-    color: #aaa;
+#mode {
+    width: 100%;
 
-    font-size: 11px;
+    height: 35px;
+
+    padding: 0 8px;
+
+    background: #080808;
+
+    border: 1px solid #333;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 10px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    cursor: pointer;
+}
+
+
+#mode:focus {
+    border-color: #777;
 }
 
 
 /* =========================================
-   CHECKBOX
+   SWITCH
 ========================================= */
 
-#invert {
-    width: 20px;
+.invert-control {
+    align-items: center;
+}
+
+
+.switch {
+    position: relative;
+
+    width: 38px;
 
     height: 20px;
 
-    cursor: pointer;
+    display: block;
 
-    accent-color: white;
+    cursor: pointer;
+}
+
+
+.switch input {
+    display: none;
+}
+
+
+.slider {
+    position: absolute;
+
+    inset: 0;
+
+    background: #222;
+
+    border: 1px solid #444;
+
+    transition: var(--transition);
+}
+
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 12px;
+
+    height: 12px;
+
+    left: 3px;
+
+    top: 3px;
+
+    background: #777;
+
+    transition: var(--transition);
+}
+
+
+.switch input:checked + .slider {
+    background: #444;
+}
+
+
+.switch input:checked + .slider::before {
+    transform: translateX(18px);
+
+    background: white;
 }
 
 
@@ -265,7 +493,7 @@ input[type="range"] {
 .result-area {
     width: 100%;
 
-    border: 1px solid #222;
+    border: 1px solid var(--border);
 
     background: #050505;
 
@@ -278,7 +506,7 @@ input[type="range"] {
 ========================================= */
 
 .result-header {
-    min-height: 50px;
+    min-height: 58px;
 
     padding: 10px 15px;
 
@@ -288,12 +516,22 @@ input[type="range"] {
 
     align-items: center;
 
-    border-bottom: 1px solid #222;
-
     background: #101010;
+
+    border-bottom: 1px solid var(--border);
 }
 
-.result-header span {
+
+.result-header > div:first-child {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.result-title {
     color: #777;
 
     font-size: 10px;
@@ -304,20 +542,34 @@ input[type="range"] {
 }
 
 
-/* =========================================
-   COPY BUTTON
-========================================= */
+.result-info {
+    color: #444;
 
-#copyButton {
-    padding: 9px 14px;
+    font-family:
+        "Courier New",
+        monospace;
 
-    border: 1px solid #444;
+    font-size: 9px;
+}
+
+
+.result-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+
+.result-actions button {
+    padding: 9px 13px;
+
+    border: 1px solid #3a3a3a;
 
     background: transparent;
 
     color: white;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: bold;
 
@@ -325,15 +577,23 @@ input[type="range"] {
 
     cursor: pointer;
 
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
+    transition: var(--transition);
 }
 
-#copyButton:hover {
+
+.secondary-button:hover {
+    border-color: #777;
+
+    background: #181818;
+}
+
+
+.primary-button:hover {
     background: white;
 
     color: black;
+
+    border-color: white;
 }
 
 
@@ -341,20 +601,27 @@ input[type="range"] {
    OUTPUT
 ========================================= */
 
+.output-wrapper {
+    position: relative;
+
+    min-height: 430px;
+
+    background: #000;
+}
+
+
 #output {
     width: 100%;
 
-    min-height: 350px;
-
-    max-height: 600px;
+    min-height: 430px;
 
     padding: 25px;
 
     overflow: auto;
 
-    background: #000;
-
     color: white;
+
+    background: transparent;
 
     font-family:
         "Courier New",
@@ -368,6 +635,62 @@ input[type="range"] {
     white-space: pre;
 
     tab-size: 1;
+
+    outline: none;
+}
+
+
+/* =========================================
+   EMPTY MESSAGE
+========================================= */
+
+.empty-message {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    pointer-events: none;
+
+    color: #333;
+}
+
+
+.empty-message span {
+    font-size: 30px;
+
+    font-weight: 200;
+
+    line-height: 1;
+}
+
+
+.empty-message p {
+    margin-top: 12px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.empty-message small {
+    margin-top: 6px;
+
+    color: #222;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
 }
 
 
@@ -381,125 +704,102 @@ input[type="range"] {
     height: 8px;
 }
 
+
 #output::-webkit-scrollbar-track {
     background: #080808;
 }
 
+
 #output::-webkit-scrollbar-thumb {
-    background: #333;
+    background: #292929;
 }
 
+
 #output::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #444;
 }
 
 
 /* =========================================
-   TABLET
+   RESPONSIVE TABLET
 ========================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 950px) {
 
     body {
         padding: 30px 20px;
     }
 
 
-    .header h1 {
-        font-size: 26px;
-
-        letter-spacing: 3px;
-    }
-
-
     .controls {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 20px;
+        grid-template-columns:
+            1fr
+            1fr
+            1fr;
     }
 
 
-    .control:nth-child(1) {
-        grid-column: span 2;
-    }
-
-
-    .control:nth-child(2),
-    .control:nth-child(3) {
+    .character-control {
         grid-column: span 1;
     }
 
 
-    .control:nth-child(4) {
-        grid-column: span 2;
-
-        flex-direction: row;
-
-        justify-content: space-between;
-
-        align-items: center;
+    .invert-control {
+        align-items: flex-start;
     }
 
 }
 
 
 /* =========================================
-   CELULAR
+   RESPONSIVE MOBILE
 ========================================= */
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
     body {
-        padding: 20px 15px;
+        padding: 20px 12px;
     }
 
 
     .header {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
 
-    .header h1 {
-        font-size: 21px;
+    .brand h1 {
+        font-size: 25px;
 
-        letter-spacing: 2px;
+        letter-spacing: 3px;
     }
 
 
-    .header p {
-        font-size: 12px;
+    .brand p {
+        font-size: 9px;
+    }
+
+
+    .version {
+        font-size: 8px;
     }
 
 
     .upload-button {
-        width: 100%;
-
-        min-height: 110px;
-
-        font-size: 11px;
+        min-height: 120px;
     }
 
 
     .controls {
         grid-template-columns: 1fr;
-
-        gap: 18px;
-
-        padding: 15px;
     }
 
 
-    .control:nth-child(1),
-    .control:nth-child(2),
-    .control:nth-child(3),
-    .control:nth-child(4) {
-        grid-column: span 1;
+    .control {
+        min-height: 90px;
     }
 
 
-    .control:nth-child(4) {
-        display: flex;
-
+    .invert-control {
         flex-direction: row;
 
         justify-content: space-between;
@@ -513,23 +813,36 @@ input[type="range"] {
 
         align-items: stretch;
 
-        gap: 10px;
+        gap: 12px;
     }
 
 
-    #copyButton {
+    .result-header > div:first-child {
+        justify-content: space-between;
+    }
+
+
+    .result-actions {
         width: 100%;
     }
 
 
-    #output {
-        min-height: 300px;
+    .result-actions button {
+        flex: 1;
+    }
 
-        max-height: 500px;
+
+    #output {
+        min-height: 350px;
 
         padding: 15px;
 
         font-size: 6px;
+    }
+
+
+    .output-wrapper {
+        min-height: 350px;
     }
 
 }
