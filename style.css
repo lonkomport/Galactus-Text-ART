@@ -1,0 +1,457 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   BODY
+========================================= */
+
+body {
+    min-height: 100vh;
+
+    background: #0a0a0a;
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+}
+
+/* =========================================
+   APP
+========================================= */
+
+.app {
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+.header p {
+    margin-top: 8px;
+
+    color: #888;
+
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   WORKSPACE
+========================================= */
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+/* =========================================
+   UPLOAD
+========================================= */
+
+.upload-area {
+    width: 100%;
+}
+
+.upload-button {
+    width: 100%;
+    
+    min-height: 120px;
+
+    border: 1px dashed #444;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    color: #aaa;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    transition: 0.2s ease;
+}
+
+.upload-button:hover {
+    border-color: #ffffff;
+    
+    color: #ffffff;
+
+    background: #111;
+}
+
+/* =========================================
+   CONTROLS
+========================================= */
+
+.controls {
+    display: grid;
+
+    grid-template-columns: 
+        1fr
+        2fr
+        2fr
+        100px;
+    
+    gap: 15px;
+
+    padding: 20px;
+
+    background: #111;
+
+    border: 1px solid #222;
+
+}
+
+.control {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.control label {
+    color: #777;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+/* =========================================
+   INPUT TEXT
+========================================= */
+
+#character {
+    width: 55px;
+    height: 38px;
+
+    background: #0a0a0a;
+
+    border: 1px solid #333;
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    outline: none;
+}
+
+#character:hover {
+    border-color: #777;
+}
+
+/* =========================================
+   RANGE
+========================================= */
+
+input[type="range"] {
+    width: 100%;
+
+    cursor: pointer;
+
+    accent-color: white;
+}
+
+/* =========================================
+   RANGE VALUE
+========================================= */
+
+.control span {
+    color: #aaa;
+
+    font-size: 11px;
+}
+
+/* =========================================
+   CHECKBOX
+========================================= */
+
+#invert {
+    width: 20px;
+    height: 20px;
+
+    cursor: pointer;
+
+    accent-color: white;
+}
+
+/* =========================================
+   RESULT AREA
+========================================= */
+
+.result-area {
+    width: 100%;
+
+    border: 1px solid #222;
+
+    background: #050505;
+
+    overflow: hidden;
+}
+
+/* =========================================
+   RESULT HEADER
+========================================= */
+
+.result-header {
+    min-height: 50px;
+
+    padding: 10px 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid #222;
+
+    background: #101010;
+}
+
+.result-header span {
+    color: #777;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+/* =========================================
+   COPY BUTTON
+========================================= */
+
+#copyButton {
+    padding: 9px 14px;
+
+    border: 1px solid #444;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#copyButton:hover {
+    background: white;
+
+    color: black;
+}
+
+/* =========================================
+   OUTPUT
+========================================= */
+
+#output {
+    width: 100%;
+
+    min-height: 350px;
+
+    padding: 25px;
+
+    overflow: auto;
+
+    background: #000;
+
+    color: white;
+
+    font-family: 
+        "Courier New",
+        Courier,
+        monospace;
+    
+        font-size: 8px;
+
+        line-height: 1;
+
+        white-space: pre;
+
+        tab-size: 1;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+#output::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+#output::-webkit-scrollbar-track {
+    background: #080808;
+}
+
+#output::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+#output::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 800px) {
+    
+    body {
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .header h1 {
+        font-size: 24px;
+
+        letter-spacing: 3px;
+    }
+
+    .controls {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .control:nth-child(1) {
+        grid-column: span 2;
+    }
+
+    .control:nth-child(2), 
+    .control:nth-child(3) {
+        grid-column: span 1;
+    }
+
+    .control:nth-child(4) {
+        grid-column: span 2;
+
+        flex-direction: row;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+}
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+
+        letter-spacing: 2px;
+    }
+
+    .header p {
+        font-size: 12px;
+    }
+
+    .upload-button {
+        width: 100%;    
+
+        min-width: 110px;
+
+        font-size: 11px;
+    }
+
+    .controls {
+        grid-template-columns: 1fr;
+
+        padding: 15px;
+    }
+
+    .control:nth-child(1),
+    .control:nth-child(2),
+    .control:nth-child(3),
+    .control:nth-child(4) {
+        grid-column: span 1;
+    }
+
+    .control:nth-child(4) {
+        display: flex;
+
+        flex-direction: row;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+    .result-header {
+        flex-direction: column;
+        
+        align-items: stretch;
+
+        gap: 10px;
+    }
+
+    #copyButton {
+        width: 100%;
+    }
+
+    #output {
+        min-height: 300px;
+
+        padding: 15px;
+
+        font-size: 6px;
+    }
+}

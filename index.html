@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactus Text ART</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app">
+        <header class="header">
+            <h1>GALACTUS TEXT ART</h1>
+            <p>
+                Converta imagens em texto pontilhado
+            </p>
+        </header>
+        <section class="workspace">
+            <div class="upload-area">
+                <label for="imageInput" class="upload-button">
+                    SELECIONAR IMAGEM
+                </label>
+                <input 
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    hidden
+                >
+            </div>
+            <div class="controls">
+                <div class="control">
+                    <label for="character">
+                        CARACTERE
+                    </label>
+                    <input 
+                        type="text"
+                        id="character"
+                        value="●"
+                        maxlength="1"
+                    >
+
+                    <span id="widthValue">80</span>
+                </div>
+                <div class="control">
+                    <label for="contrast">
+                        CONTRASTE
+                    </label>
+
+                    <input 
+                        type="range"
+                        id="contrast"
+                        min="0"
+                        max="200"
+                        value="100"
+                    >
+
+                    <span id="contrastValue">100</span>
+                </div>
+                <div class="control">
+                    <label for="invert">
+                        INVERTER
+                    </label>
+                    <input 
+                        type="checkbox"
+                        id="invert"
+                    >
+                </div>
+            </div>
+            <div class="result-area">
+                <div class="result-header">
+                    <span>RESULTADO</span>
+                    <button id="copyButton">
+                        COPIAR TEXTO
+                    </button>
+                </div>
+                <pre id="output"></pre>
+            </div>
+        </section>
+    </main>
+    <canvas id="canvas" hidden></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
