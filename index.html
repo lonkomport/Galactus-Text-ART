@@ -1,51 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galactus Text ART</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Galactus Text Art</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
     <main class="app">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
         <header class="header">
+
             <h1>GALACTUS TEXT ART</h1>
+
             <p>
                 Converta imagens em texto pontilhado
             </p>
+
         </header>
+
+
+        <!-- =====================================
+             WORKSPACE
+        ====================================== -->
+
         <section class="workspace">
+
+
+            <!-- =================================
+                 UPLOAD
+            ================================== -->
+
             <div class="upload-area">
-                <label for="imageInput" class="upload-button">
+
+                <label
+                    for="imageInput"
+                    class="upload-button"
+                >
                     SELECIONAR IMAGEM
                 </label>
-                <input 
+
+                <input
                     type="file"
                     id="imageInput"
                     accept="image/*"
                     hidden
                 >
+
             </div>
+
+
+            <!-- =================================
+                 CONTROLES
+            ================================== -->
+
             <div class="controls">
+
+
+                <!-- CARACTERE -->
+
                 <div class="control">
+
                     <label for="character">
                         CARACTERE
                     </label>
-                    <input 
+
+                    <input
                         type="text"
                         id="character"
                         value="●"
                         maxlength="1"
                     >
 
-                    <span id="widthValue">80</span>
                 </div>
+
+
+                <!-- LARGURA -->
+
                 <div class="control">
+
+                    <label for="width">
+                        LARGURA
+                    </label>
+
+                    <input
+                        type="range"
+                        id="width"
+                        min="20"
+                        max="150"
+                        value="80"
+                    >
+
+                    <span id="widthValue">
+                        80
+                    </span>
+
+                </div>
+
+
+                <!-- CONTRASTE -->
+
+                <div class="control">
+
                     <label for="contrast">
                         CONTRASTE
                     </label>
 
-                    <input 
+                    <input
                         type="range"
                         id="contrast"
                         min="0"
@@ -53,30 +127,74 @@
                         value="100"
                     >
 
-                    <span id="contrastValue">100</span>
+                    <span id="contrastValue">
+                        100
+                    </span>
+
                 </div>
-                <div class="control">
+
+
+                <!-- INVERTER -->
+
+                <div class="control invert-control">
+
                     <label for="invert">
                         INVERTER
                     </label>
-                    <input 
+
+                    <input
                         type="checkbox"
                         id="invert"
                     >
+
                 </div>
+
             </div>
+
+
+            <!-- =================================
+                 RESULTADO
+            ================================== -->
+
             <div class="result-area">
+
                 <div class="result-header">
-                    <span>RESULTADO</span>
+
+                    <span>
+                        RESULTADO
+                    </span>
+
                     <button id="copyButton">
                         COPIAR TEXTO
                     </button>
+
                 </div>
+
                 <pre id="output"></pre>
+
             </div>
+
         </section>
+
     </main>
-    <canvas id="canvas" hidden></canvas>
+
+
+    <!-- =====================================
+         CANVAS INVISÍVEL
+    ====================================== -->
+
+    <canvas
+        id="canvas"
+        hidden
+    ></canvas>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
