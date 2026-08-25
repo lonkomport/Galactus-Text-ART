@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,365 +10,700 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Galactus Text Art</title>
+    <meta
+        name="description"
+        content="Galactus Text Art V4 - Conversor de imagens para texto"
+    >
+
+    <title>GALACTUS TEXT ART V4</title>
 
     <link
         rel="stylesheet"
         href="style.css"
     >
+
 </head>
+
 
 <body>
 
-    <main class="app">
+<main class="app">
 
-        <!-- =====================================
-             HEADER
-        ====================================== -->
 
-        <header class="header">
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header class="header">
+
+        <div>
 
             <div class="brand">
 
-                <h1>
-                    GALACTUS
-                    <br>
-                    TEXT ART
-                </h1>
-
-                <p>
-                    Converta imagens em
-                    <br>
-                    texto pontilhado
-                </p>
+                GALACTUS
+                <br>
+                TEXT ART
 
             </div>
 
-            <div class="version">
-                V2.0
+            <p class="subtitle">
+                CONVERTA IMAGENS EM TEXTO PONTILHADO
+            </p>
+
+        </div>
+
+
+        <div class="version">
+            V4.0
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================
+         UPLOAD
+    ====================================== -->
+
+    <section class="upload-section">
+
+        <label
+            for="imageInput"
+            class="upload-box"
+            id="uploadBox"
+        >
+
+            <div class="upload-icon">
+                +
             </div>
 
-        </header>
+            <div class="upload-title">
+                ADICIONAR IMAGEM
+            </div>
+
+            <div class="upload-subtitle">
+                CLIQUE OU ARRASTE UMA IMAGEM
+            </div>
+
+        </label>
 
 
-        <!-- =====================================
-             WORKSPACE
-        ====================================== -->
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            hidden
+        >
 
-        <section class="workspace">
+
+        <div
+            class="file-info"
+            id="fileInfo"
+        >
+            NENHUMA IMAGEM
+        </div>
+
+    </section>
 
 
-            <!-- =================================
-                 UPLOAD
-            ================================== -->
 
-            <div class="upload-area">
+    <!-- =====================================
+         PREVIEW
+    ====================================== -->
 
-                <label
-                    for="imageInput"
-                    class="upload-button"
-                    id="uploadButton"
-                >
+    <section class="preview-grid">
 
-                    <span class="upload-icon">
-                        +
-                    </span>
 
-                    <span>
-                        ADICIONAR IMAGEM
-                    </span>
+        <!-- ORIGINAL -->
 
-                </label>
+        <div class="panel">
 
-                <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/png,image/jpeg,image/webp,image/gif"
-                    hidden
-                >
+            <div class="panel-header">
+
+                <span>
+                    ORIGINAL
+                </span>
+
+                <span id="dimensions">
+                    0 × 0
+                </span>
+
+            </div>
+
+
+            <div class="original-preview">
 
                 <div
-                    class="file-name"
-                    id="fileName"
+                    id="originalEmpty"
+                    class="empty-preview"
                 >
-                    NENHUMA IMAGEM SELECIONADA
+
+                    <span>+</span>
+
+                    <small>
+                        SEM IMAGEM
+                    </small>
+
                 </div>
+
+
+                <img
+                    id="imagePreview"
+                    alt="Imagem selecionada"
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RESULTADO MINI -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <span>
+                    PREVIEW
+                </span>
+
+                <span id="previewType">
+                    DOTS
+                </span>
 
             </div>
 
 
-            <!-- =================================
-                 CONTROLES
-            ================================== -->
+            <div class="mini-preview">
 
-            <div class="controls">
+                <pre id="miniOutput"></pre>
 
 
-                <!-- CARACTERES -->
+                <div
+                    id="miniEmpty"
+                    class="empty-preview"
+                >
 
-                <div class="control character-control">
+                    <span>+</span>
 
-                    <label for="character">
-                        CARACTERE
-                    </label>
-
-                    <input
-                        type="text"
-                        id="character"
-                        value="●"
-                        maxlength="1"
-                    >
-
-                </div>
-
-
-                <!-- LARGURA -->
-
-                <div class="control">
-
-                    <div class="control-title">
-
-                        <label for="width">
-                            LARGURA
-                        </label>
-
-                        <span id="widthValue">
-                            80
-                        </span>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="width"
-                        min="20"
-                        max="180"
-                        value="80"
-                    >
-
-                </div>
-
-
-                <!-- CONTRASTE -->
-
-                <div class="control">
-
-                    <div class="control-title">
-
-                        <label for="contrast">
-                            CONTRASTE
-                        </label>
-
-                        <span id="contrastValue">
-                            100
-                        </span>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="contrast"
-                        min="0"
-                        max="200"
-                        value="100"
-                    >
-
-                </div>
-
-
-                <!-- BRILHO -->
-
-                <div class="control">
-
-                    <div class="control-title">
-
-                        <label for="brightness">
-                            BRILHO
-                        </label>
-
-                        <span id="brightnessValue">
-                            0
-                        </span>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="brightness"
-                        min="-100"
-                        max="100"
-                        value="0"
-                    >
-
-                </div>
-
-
-                <!-- DENSIDADE -->
-
-                <div class="control">
-
-                    <div class="control-title">
-
-                        <label for="density">
-                            DENSIDADE
-                        </label>
-
-                        <span id="densityValue">
-                            100
-                        </span>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="density"
-                        min="20"
-                        max="200"
-                        value="100"
-                    >
-
-                </div>
-
-
-                <!-- MODO -->
-
-                <div class="control">
-
-                    <label for="mode">
-                        MODO
-                    </label>
-
-                    <select id="mode">
-
-                        <option value="dots">
-                            PONTILHADO
-                        </option>
-
-                        <option value="ascii">
-                            ASCII
-                        </option>
-
-                        <option value="blocks">
-                            BLOCOS
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- INVERTER -->
-
-                <div class="control invert-control">
-
-                    <label for="invert">
-                        INVERTER
-                    </label>
-
-                    <label class="switch">
-
-                        <input
-                            type="checkbox"
-                            id="invert"
-                        >
-
-                        <span class="slider"></span>
-
-                    </label>
+                    <small>
+                        SEM RESULTADO
+                    </small>
 
                 </div>
 
             </div>
 
+        </div>
 
-            <!-- =================================
-                 RESULTADO
-            ================================== -->
+    </section>
 
-            <div class="result-area">
-
-                <div class="result-header">
-
-                    <div>
-
-                        <span class="result-title">
-                            RESULTADO
-                        </span>
-
-                        <span
-                            class="result-info"
-                            id="resultInfo"
-                        >
-                            0 caracteres
-                        </span>
-
-                    </div>
-
-                    <div class="result-actions">
-
-                        <button
-                            id="clearButton"
-                            class="secondary-button"
-                        >
-                            LIMPAR
-                        </button>
-
-                        <button
-                            id="copyButton"
-                            class="primary-button"
-                        >
-                            COPIAR TEXTO
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="output-wrapper">
-
-                    <pre id="output"></pre>
-
-                    <div
-                        id="emptyMessage"
-                        class="empty-message"
-                    >
-                        <span>+</span>
-
-                        <p>
-                            ADICIONE UMA IMAGEM
-                        </p>
-
-                        <small>
-                            O resultado aparecerá aqui
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
 
 
     <!-- =====================================
-         CANVAS
+         PRESETS
     ====================================== -->
 
-    <canvas
-        id="canvas"
-        hidden
-    ></canvas>
+    <section class="preset-section">
+
+        <div class="section-title">
+            PRESETS
+        </div>
+
+
+        <div class="preset-list">
+
+            <button
+                class="preset active"
+                data-preset="default"
+            >
+                DEFAULT
+            </button>
+
+
+            <button
+                class="preset"
+                data-preset="dot"
+            >
+                DOT
+            </button>
+
+
+            <button
+                class="preset"
+                data-preset="ascii"
+            >
+                ASCII
+            </button>
+
+
+            <button
+                class="preset"
+                data-preset="block"
+            >
+                BLOCK
+            </button>
+
+
+            <button
+                class="preset"
+                data-preset="dense"
+            >
+                DENSE
+            </button>
+
+
+            <button
+                class="preset"
+                data-preset="soft"
+            >
+                SOFT
+            </button>
+
+        </div>
+
+    </section>
+
 
 
     <!-- =====================================
-         JAVASCRIPT
+         CONTROLES PRINCIPAIS
     ====================================== -->
 
-    <script src="script.js"></script>
+    <section class="controls">
+
+
+        <!-- CARACTERE -->
+
+        <div class="control character-control">
+
+            <label>
+                CARACTERE
+            </label>
+
+            <input
+                type="text"
+                id="character"
+                maxlength="1"
+                value="●"
+            >
+
+        </div>
+
+
+
+        <!-- CONJUNTO -->
+
+        <div class="control">
+
+            <label>
+                CONJUNTO
+            </label>
+
+            <select id="characterSet">
+
+                <option value="single">
+                    PERSONALIZADO
+                </option>
+
+                <option value="dots">
+                    PONTOS
+                </option>
+
+                <option value="ascii">
+                    ASCII
+                </option>
+
+                <option value="blocks">
+                    BLOCOS
+                </option>
+
+                <option value="shade">
+                    SOMBRAS
+                </option>
+
+                <option value="minimal">
+                    MINIMAL
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- LARGURA -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    LARGURA
+                </label>
+
+                <span id="widthValue">
+                    80
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="width"
+                min="20"
+                max="180"
+                value="80"
+            >
+
+        </div>
+
+
+
+        <!-- CONTRASTE -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    CONTRASTE
+                </label>
+
+                <span id="contrastValue">
+                    100
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="contrast"
+                min="0"
+                max="200"
+                value="100"
+            >
+
+        </div>
+
+
+
+        <!-- BRILHO -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    BRILHO
+                </label>
+
+                <span id="brightnessValue">
+                    0
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="brightness"
+                min="-100"
+                max="100"
+                value="0"
+            >
+
+        </div>
+
+
+
+        <!-- DENSIDADE -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    DENSIDADE
+                </label>
+
+                <span id="densityValue">
+                    100
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="density"
+                min="20"
+                max="200"
+                value="100"
+            >
+
+        </div>
+
+
+
+        <!-- ESPAÇAMENTO X -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    ESPAÇAMENTO X
+                </label>
+
+                <span id="spacingXValue">
+                    1
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="spacingX"
+                min="1"
+                max="3"
+                value="1"
+            >
+
+        </div>
+
+
+
+        <!-- ESPAÇAMENTO Y -->
+
+        <div class="control">
+
+            <div class="control-top">
+
+                <label>
+                    ESPAÇAMENTO Y
+                </label>
+
+                <span id="spacingYValue">
+                    1
+                </span>
+
+            </div>
+
+
+            <input
+                type="range"
+                id="spacingY"
+                min="1"
+                max="3"
+                value="1"
+            >
+
+        </div>
+
+
+
+        <!-- PROPORÇÃO -->
+
+        <div class="control">
+
+            <label>
+                PROPORÇÃO
+            </label>
+
+
+            <select id="aspectRatio">
+
+                <option value="0.45">
+                    COMPACTA
+                </option>
+
+                <option
+                    value="0.5"
+                    selected
+                >
+                    NORMAL
+                </option>
+
+                <option value="0.6">
+                    ALTA
+                </option>
+
+                <option value="0.7">
+                    EXTRA ALTA
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- INVERTER -->
+
+        <div class="control toggle-control">
+
+            <label>
+                INVERTER
+            </label>
+
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="invert"
+                >
+
+                <span></span>
+
+            </label>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         RESULTADO
+    ====================================== -->
+
+    <section class="result-section">
+
+
+        <div class="result-header">
+
+            <div>
+
+                <span class="result-title">
+                    RESULTADO
+                </span>
+
+                <span
+                    class="result-stats"
+                    id="resultStats"
+                >
+                    0 caracteres
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    id="clearButton"
+                    class="button secondary"
+                >
+                    LIMPAR
+                </button>
+
+
+                <button
+                    id="downloadButton"
+                    class="button secondary"
+                >
+                    BAIXAR .TXT
+                </button>
+
+
+                <button
+                    id="copyButton"
+                    class="button primary"
+                >
+                    COPIAR
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="output-container">
+
+            <pre id="output"></pre>
+
+
+            <div
+                class="output-empty"
+                id="outputEmpty"
+            >
+
+                <div>
+                    +
+                </div>
+
+                <p>
+                    SEU TEXT ART APARECERÁ AQUI
+                </p>
+
+                <small>
+                    Adicione uma imagem para começar
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         STATUS
+    ====================================== -->
+
+    <div
+        class="status"
+        id="status"
+    >
+        PRONTO
+    </div>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer">
+
+        <span>
+            GALACTUS TEXT ART
+        </span>
+
+        <span>
+            PROCESSAMENTO LOCAL
+        </span>
+
+        <span>
+            V4.0
+        </span>
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =====================================
+     CANVAS
+====================================== -->
+
+<canvas
+    id="canvas"
+    hidden
+></canvas>
+
+
+
+<script src="script.js"></script>
 
 </body>
 

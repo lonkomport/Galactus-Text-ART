@@ -1,63 +1,108 @@
 // =========================================
-// ELEMENTOS DO HTML
+// GALACTUS TEXT ART
+// V4.0
+// =========================================
+
+
+// =========================================
+// ELEMENTOS
 // =========================================
 
 const imageInput =
     document.getElementById("imageInput");
 
-const uploadButton =
-    document.getElementById("uploadButton");
+const uploadBox =
+    document.getElementById("uploadBox");
 
-const fileName =
-    document.getElementById("fileName");
+const fileInfo =
+    document.getElementById("fileInfo");
 
-const characterInput =
+const imagePreview =
+    document.getElementById("imagePreview");
+
+const originalEmpty =
+    document.getElementById("originalEmpty");
+
+const dimensions =
+    document.getElementById("dimensions");
+
+const miniOutput =
+    document.getElementById("miniOutput");
+
+const miniEmpty =
+    document.getElementById("miniEmpty");
+
+const previewType =
+    document.getElementById("previewType");
+
+const character =
     document.getElementById("character");
 
-const widthInput =
+const characterSet =
+    document.getElementById("characterSet");
+
+const width =
     document.getElementById("width");
 
 const widthValue =
     document.getElementById("widthValue");
 
-const contrastInput =
+const contrast =
     document.getElementById("contrast");
 
 const contrastValue =
     document.getElementById("contrastValue");
 
-const brightnessInput =
+const brightness =
     document.getElementById("brightness");
 
 const brightnessValue =
     document.getElementById("brightnessValue");
 
-const densityInput =
+const density =
     document.getElementById("density");
 
 const densityValue =
     document.getElementById("densityValue");
 
-const modeInput =
-    document.getElementById("mode");
+const spacingX =
+    document.getElementById("spacingX");
 
-const invertInput =
+const spacingXValue =
+    document.getElementById("spacingXValue");
+
+const spacingY =
+    document.getElementById("spacingY");
+
+const spacingYValue =
+    document.getElementById("spacingYValue");
+
+const aspectRatio =
+    document.getElementById("aspectRatio");
+
+const invert =
     document.getElementById("invert");
 
 const output =
     document.getElementById("output");
 
+const outputEmpty =
+    document.getElementById("outputEmpty");
+
+const resultStats =
+    document.getElementById("resultStats");
+
 const copyButton =
     document.getElementById("copyButton");
+
+const downloadButton =
+    document.getElementById("downloadButton");
 
 const clearButton =
     document.getElementById("clearButton");
 
-const emptyMessage =
-    document.getElementById("emptyMessage");
-
-const resultInfo =
-    document.getElementById("resultInfo");
+const status =
+    document.getElementById("status");
 
 const canvas =
     document.getElementById("canvas");
@@ -65,118 +110,422 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
-
-// =========================================
-// VARIÁVEIS
-// =========================================
-
-let imagem = null;
+const presets =
+    document.querySelectorAll(".preset");
 
 
 // =========================================
-// PALETAS DE CARACTERES
+// ESTADO
 // =========================================
 
-const PALETAS = {
+let image = null;
+
+let currentText = "";
+
+
+// =========================================
+// CONJUNTOS DE CARACTERES
+// =========================================
+
+const CHARACTER_SETS = {
+
+    single: null,
 
     dots:
-        " ·:+*#%@",
+        " ·•●",
 
     ascii:
-        " .:-=+*#%@",
+        " .'`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
 
     blocks:
-        " ░▒▓█"
+        " ░▒▓█",
+
+    shade:
+        " .░▒▓█",
+
+    minimal:
+        " .·•●"
 
 };
 
 
 // =========================================
-// SELECIONAR IMAGEM
+// PRESETS
+// =========================================
+
+const PRESETS = {
+
+    default: {
+
+        character: "●",
+
+        characterSet: "single",
+
+        width: 80,
+
+        contrast: 100,
+
+        brightness: 0,
+
+        density: 100,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.5,
+
+        invert: false
+
+    },
+
+
+    dot: {
+
+        character: "●",
+
+        characterSet: "dots",
+
+        width: 80,
+
+        contrast: 120,
+
+        brightness: 0,
+
+        density: 110,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.5,
+
+        invert: false
+
+    },
+
+
+    ascii: {
+
+        character: "#",
+
+        characterSet: "ascii",
+
+        width: 100,
+
+        contrast: 130,
+
+        brightness: 0,
+
+        density: 100,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.5,
+
+        invert: false
+
+    },
+
+
+    block: {
+
+        character: "█",
+
+        characterSet: "blocks",
+
+        width: 90,
+
+        contrast: 140,
+
+        brightness: 0,
+
+        density: 120,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.6,
+
+        invert: false
+
+    },
+
+
+    dense: {
+
+        character: "●",
+
+        characterSet: "dots",
+
+        width: 120,
+
+        contrast: 160,
+
+        brightness: -10,
+
+        density: 160,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.5,
+
+        invert: false
+
+    },
+
+
+    soft: {
+
+        character: "·",
+
+        characterSet: "dots",
+
+        width: 80,
+
+        contrast: 70,
+
+        brightness: 15,
+
+        density: 70,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspectRatio: 0.5,
+
+        invert: false
+
+    }
+
+};
+
+
+// =========================================
+// UPLOAD
 // =========================================
 
 imageInput.addEventListener(
     "change",
-    function (event) {
+    function () {
 
-        const arquivo =
-            event.target.files[0];
+        const file =
+            imageInput.files[0];
 
 
-        if (!arquivo) {
+        if (!file) {
+
             return;
+
         }
 
 
-        if (!arquivo.type.startsWith("image/")) {
+        carregarImagem(file);
 
-            alert(
-                "Selecione um arquivo de imagem válido."
+    }
+);
+
+
+// =========================================
+// CARREGAR IMAGEM
+// =========================================
+
+function carregarImagem(file) {
+
+    if (
+        !file.type.startsWith("image/")
+    ) {
+
+        mostrarStatus(
+            "ARQUIVO INVÁLIDO",
+            true
+        );
+
+        return;
+
+    }
+
+
+    fileInfo.textContent =
+        `${file.name} • ${formatBytes(file.size)}`;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function (event) {
+
+            const newImage =
+                new Image();
+
+
+            newImage.onload =
+                function () {
+
+                    image =
+                        newImage;
+
+
+                    imagePreview.src =
+                        event.target.result;
+
+
+                    imagePreview.style.display =
+                        "block";
+
+
+                    originalEmpty.style.display =
+                        "none";
+
+
+                    dimensions.textContent =
+                        `${image.width} × ${image.height}`;
+
+
+                    mostrarStatus(
+                        "IMAGEM CARREGADA",
+                        false
+                    );
+
+
+                    converter();
+
+                };
+
+
+            newImage.onerror =
+                function () {
+
+                    mostrarStatus(
+                        "ERRO AO CARREGAR IMAGEM",
+                        true
+                    );
+
+                };
+
+
+            newImage.src =
+                event.target.result;
+
+        };
+
+
+    reader.onerror =
+        function () {
+
+            mostrarStatus(
+                "ERRO AO LER ARQUIVO",
+                true
             );
 
+        };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+// =========================================
+// DRAG & DROP
+// =========================================
+
+uploadBox.addEventListener(
+    "dragover",
+    function (event) {
+
+        event.preventDefault();
+
+        uploadBox.classList.add(
+            "dragging"
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "dragleave",
+    function () {
+
+        uploadBox.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "drop",
+    function (event) {
+
+        event.preventDefault();
+
+
+        uploadBox.classList.remove(
+            "dragging"
+        );
+
+
+        const file =
+            event.dataTransfer.files[0];
+
+
+        if (!file) {
+
             return;
+
         }
 
 
-        fileName.textContent =
-            arquivo.name;
+        carregarImagem(file);
+
+    }
+);
 
 
-        const reader =
-            new FileReader();
+// =========================================
+// CONTROLES
+// =========================================
+
+const controls =
+    [
+
+        width,
+        contrast,
+        brightness,
+        density,
+        spacingX,
+        spacingY,
+        character,
+        characterSet,
+        aspectRatio,
+        invert
+
+    ];
 
 
-        reader.onload =
-            function (event) {
+controls.forEach(
+    function (control) {
 
-                imagem =
-                    new Image();
-
-
-                imagem.onload =
-                    function () {
-
-                        console.log(
-                            "Imagem carregada:",
-                            imagem.width,
-                            "x",
-                            imagem.height
-                        );
+        control.addEventListener(
+            "input",
+            converter
+        );
 
 
-                        converterImagem();
-
-                    };
-
-
-                imagem.onerror =
-                    function () {
-
-                        alert(
-                            "Não foi possível carregar a imagem."
-                        );
-
-                    };
-
-
-                imagem.src =
-                    event.target.result;
-
-            };
-
-
-        reader.onerror =
-            function () {
-
-                alert(
-                    "Não foi possível ler o arquivo."
-                );
-
-            };
-
-
-        reader.readAsDataURL(
-            arquivo
+        control.addEventListener(
+            "change",
+            converter
         );
 
     }
@@ -184,292 +533,220 @@ imageInput.addEventListener(
 
 
 // =========================================
-// LARGURA
+// CONVERTER
 // =========================================
 
-widthInput.addEventListener(
-    "input",
-    function () {
+function converter() {
 
-        widthValue.textContent =
-            this.value;
-
-        converterImagem();
-
-    }
-);
+    atualizarValores();
 
 
-// =========================================
-// CONTRASTE
-// =========================================
+    if (!image) {
 
-contrastInput.addEventListener(
-    "input",
-    function () {
-
-        contrastValue.textContent =
-            this.value;
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// BRILHO
-// =========================================
-
-brightnessInput.addEventListener(
-    "input",
-    function () {
-
-        brightnessValue.textContent =
-            this.value;
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// DENSIDADE
-// =========================================
-
-densityInput.addEventListener(
-    "input",
-    function () {
-
-        densityValue.textContent =
-            this.value;
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// MODO
-// =========================================
-
-modeInput.addEventListener(
-    "change",
-    function () {
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// INVERTER
-// =========================================
-
-invertInput.addEventListener(
-    "change",
-    function () {
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// CARACTERE PERSONALIZADO
-// =========================================
-
-characterInput.addEventListener(
-    "input",
-    function () {
-
-        converterImagem();
-
-    }
-);
-
-
-// =========================================
-// CONVERTER IMAGEM
-// =========================================
-
-function converterImagem() {
-
-    if (!imagem) {
         return;
-    }
-
-
-    // -----------------------------------------
-    // CONFIGURAÇÕES
-    // -----------------------------------------
-
-    const largura =
-        parseInt(widthInput.value);
-
-
-    const contraste =
-        parseInt(contrastInput.value);
-
-
-    const brilhoExtra =
-        parseInt(brightnessInput.value);
-
-
-    const densidade =
-        parseInt(densityInput.value);
-
-
-    const inverter =
-        invertInput.checked;
-
-
-    const modo =
-        modeInput.value;
-
-
-    let caractere =
-        characterInput.value;
-
-
-    if (!caractere) {
-
-        caractere = "●";
 
     }
 
 
-    // -----------------------------------------
-    // PROPORÇÃO
-    // -----------------------------------------
-
-    const proporcao =
-        imagem.height /
-        imagem.width;
+    const config =
+        obterConfiguracao();
 
 
-    /*
-        Caracteres de texto são mais altos
-        do que largos.
+    const result =
+        gerarTextArt(config);
 
-        0.5 corrige essa diferença.
-    */
 
-    const altura =
+    currentText =
+        result;
+
+
+    output.textContent =
+        result;
+
+
+    miniOutput.textContent =
+        result;
+
+
+    outputEmpty.style.display =
+        "none";
+
+
+    miniEmpty.style.display =
+        "none";
+
+
+    atualizarEstatisticas(
+        result
+    );
+
+
+    previewType.textContent =
+        config.characterSet.toUpperCase();
+
+
+    mostrarStatus(
+        "CONVERSÃO ATUALIZADA",
+        false
+    );
+
+}
+
+
+// =========================================
+// CONFIGURAÇÃO
+// =========================================
+
+function obterConfiguracao() {
+
+    return {
+
+        width:
+            parseInt(width.value),
+
+        contrast:
+            parseInt(contrast.value),
+
+        brightness:
+            parseInt(brightness.value),
+
+        density:
+            parseInt(density.value),
+
+        spacingX:
+            parseInt(spacingX.value),
+
+        spacingY:
+            parseInt(spacingY.value),
+
+        aspectRatio:
+            parseFloat(
+                aspectRatio.value
+            ),
+
+        character:
+            character.value || "●",
+
+        characterSet:
+            characterSet.value,
+
+        invert:
+            invert.checked
+
+    };
+
+}
+
+
+// =========================================
+// GERAR TEXT ART
+// =========================================
+
+function gerarTextArt(config) {
+
+    const targetWidth =
+        config.width;
+
+
+    const imageRatio =
+        image.height /
+        image.width;
+
+
+    const targetHeight =
         Math.max(
             1,
             Math.floor(
-                largura *
-                proporcao *
-                0.5
+                targetWidth *
+                imageRatio *
+                config.aspectRatio
             )
         );
 
 
-    // -----------------------------------------
-    // CANVAS
-    // -----------------------------------------
-
     canvas.width =
-        largura;
+        targetWidth;
+
 
     canvas.height =
-        altura;
+        targetHeight;
 
 
     ctx.clearRect(
         0,
         0,
-        largura,
-        altura
+        targetWidth,
+        targetHeight
     );
 
-
-    // -----------------------------------------
-    // DESENHAR IMAGEM
-    // -----------------------------------------
 
     ctx.drawImage(
-        imagem,
+        image,
         0,
         0,
-        largura,
-        altura
+        targetWidth,
+        targetHeight
     );
 
 
-    // -----------------------------------------
-    // PEGAR PIXELS
-    // -----------------------------------------
-
-    const dados =
+    const pixels =
         ctx.getImageData(
             0,
             0,
-            largura,
-            altura
+            targetWidth,
+            targetHeight
         ).data;
 
 
-    // -----------------------------------------
-    // PALETA
-    // -----------------------------------------
-
-    let paleta =
-        PALETAS[modo];
-
-
-    // -----------------------------------------
-    // GERAR TEXTO
-    // -----------------------------------------
-
-    let resultado = "";
+    let result = "";
 
 
     for (
         let y = 0;
-        y < altura;
-        y++
+        y < targetHeight;
+        y += config.spacingY
     ) {
 
         for (
             let x = 0;
-            x < largura;
-            x++
+            x < targetWidth;
+            x += config.spacingX
         ) {
 
-            const indice =
-                (y * largura + x) * 4;
+            const index =
+                (
+                    y *
+                    targetWidth +
+                    x
+                ) * 4;
 
 
-            const vermelho =
-                dados[indice];
+            const red =
+                pixels[index];
 
 
-            const verde =
-                dados[indice + 1];
+            const green =
+                pixels[index + 1];
 
 
-            const azul =
-                dados[indice + 2];
+            const blue =
+                pixels[index + 2];
 
 
             const alpha =
-                dados[indice + 3];
+                pixels[index + 3];
 
 
             // ---------------------------------
-            // LUMINOSIDADE
+            // BRILHO ORIGINAL
             // ---------------------------------
 
-            let luminosidade =
-                0.299 * vermelho +
-                0.587 * verde +
-                0.114 * azul;
+            let value =
+                (
+                    0.299 * red +
+                    0.587 * green +
+                    0.114 * blue
+                );
 
 
             // ---------------------------------
@@ -478,7 +755,7 @@ function converterImagem() {
 
             if (alpha < 128) {
 
-                luminosidade = 255;
+                value = 255;
 
             }
 
@@ -487,17 +764,15 @@ function converterImagem() {
             // BRILHO
             // ---------------------------------
 
-            luminosidade +=
-                brilhoExtra;
+            value +=
+                config.brightness;
 
 
-            luminosidade =
-                Math.max(
+            value =
+                limitar(
+                    value,
                     0,
-                    Math.min(
-                        255,
-                        luminosidade
-                    )
+                    255
                 );
 
 
@@ -505,21 +780,21 @@ function converterImagem() {
             // CONTRASTE
             // ---------------------------------
 
-            luminosidade =
+            value =
                 aplicarContraste(
-                    luminosidade,
-                    contraste
+                    value,
+                    config.contrast
                 );
 
 
             // ---------------------------------
-            // INVERTER
+            // INVERSÃO
             // ---------------------------------
 
-            if (inverter) {
+            if (config.invert) {
 
-                luminosidade =
-                    255 - luminosidade;
+                value =
+                    255 - value;
 
             }
 
@@ -528,121 +803,128 @@ function converterImagem() {
             // DENSIDADE
             // ---------------------------------
 
-            /*
-                density controla a intensidade
-                geral dos caracteres.
-
-                Valores menores deixam a imagem
-                mais "leve".
-
-                Valores maiores deixam a imagem
-                mais preenchida.
-            */
-
-            const densidadeNormalizada =
-                densidade / 100;
-
-
-            luminosidade =
-                128 +
-                (
-                    luminosidade -
-                    128
-                ) / densidadeNormalizada;
-
-
-            luminosidade =
-                Math.max(
-                    0,
-                    Math.min(
-                        255,
-                        luminosidade
-                    )
+            value =
+                aplicarDensidade(
+                    value,
+                    config.density
                 );
 
 
             // ---------------------------------
-            // MAPEAR PARA CARACTERE
+            // CARACTERE
             // ---------------------------------
 
-            const indiceCaractere =
-                Math.floor(
-                    (
-                        luminosidade / 255
-                    ) *
-                    (
-                        paleta.length - 1
-                    )
+            result +=
+                obterCaractere(
+                    value,
+                    config
                 );
-
-
-            let caractereFinal =
-                paleta[indiceCaractere];
-
-
-            // ---------------------------------
-            // CARACTERE PERSONALIZADO
-            // ---------------------------------
-
-            if (modo === "dots") {
-
-                /*
-                    Mantemos o caractere personalizado
-                    para os pontos mais fortes.
-                */
-
-                if (
-                    indiceCaractere >=
-                    Math.floor(
-                        paleta.length * 0.65
-                    )
-                ) {
-
-                    caractereFinal =
-                        caractere;
-
-                }
-
-            }
-
-
-            resultado +=
-                caractereFinal;
 
         }
 
 
-        resultado += "\n";
+        result += "\n";
+
+    }
+
+
+    return result;
+
+}
+
+
+// =========================================
+// OBTER CARACTERE
+// =========================================
+
+function obterCaractere(
+    value,
+    config
+) {
+
+    const set =
+        CHARACTER_SETS[
+            config.characterSet
+        ];
+
+
+    // -----------------------------------------
+    // PERSONALIZADO
+    // -----------------------------------------
+
+    if (!set) {
+
+        /*
+            Para o modo personalizado,
+            o caractere aparece de acordo
+            com a intensidade.
+        */
+
+        if (value < 128) {
+
+            return config.character;
+
+        }
+
+
+        return " ";
 
     }
 
 
     // -----------------------------------------
-    // MOSTRAR RESULTADO
+    // PALETA
     // -----------------------------------------
 
-    output.textContent =
-        resultado;
+    const index =
+        Math.floor(
+            (
+                value / 255
+            ) *
+            (
+                set.length - 1
+            )
+        );
 
 
-    // -----------------------------------------
-    // OCULTAR EMPTY STATE
-    // -----------------------------------------
+    return set[index];
 
-    emptyMessage.style.display =
-        "none";
+}
 
 
-    // -----------------------------------------
-    // INFORMAÇÕES
-    // -----------------------------------------
+// =========================================
+// DENSIDADE
+// =========================================
 
-    const totalCaracteres =
-        resultado.length;
+function aplicarDensidade(
+    value,
+    density
+) {
+
+    const factor =
+        density / 100;
 
 
-    resultInfo.textContent =
-        `${totalCaracteres.toLocaleString("pt-BR")} caracteres`;
+    if (factor === 1) {
+
+        return value;
+
+    }
+
+
+    const result =
+        128 +
+        (
+            value - 128
+        ) /
+        factor;
+
+
+    return limitar(
+        result,
+        0,
+        255
+    );
 
 }
 
@@ -652,30 +934,186 @@ function converterImagem() {
 // =========================================
 
 function aplicarContraste(
-    brilho,
-    contraste
+    value,
+    contrast
 ) {
 
-    const fator =
-        contraste / 100;
+    const factor =
+        contrast / 100;
 
 
-    brilho =
+    const result =
         128 +
-        fator *
         (
-            brilho -
-            128
-        );
+            value - 128
+        ) *
+        factor;
 
+
+    return limitar(
+        result,
+        0,
+        255
+    );
+
+}
+
+
+// =========================================
+// LIMITAR
+// =========================================
+
+function limitar(
+    value,
+    min,
+    max
+) {
 
     return Math.max(
-        0,
+        min,
         Math.min(
-            255,
-            brilho
+            max,
+            value
         )
     );
+
+}
+
+
+// =========================================
+// ATUALIZAR VALORES
+// =========================================
+
+function atualizarValores() {
+
+    widthValue.textContent =
+        width.value;
+
+
+    contrastValue.textContent =
+        contrast.value;
+
+
+    brightnessValue.textContent =
+        brightness.value;
+
+
+    densityValue.textContent =
+        density.value;
+
+
+    spacingXValue.textContent =
+        spacingX.value;
+
+
+    spacingYValue.textContent =
+        spacingY.value;
+
+}
+
+
+// =========================================
+// PRESETS
+// =========================================
+
+presets.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                const name =
+                    button.dataset.preset;
+
+
+                const preset =
+                    PRESETS[name];
+
+
+                if (!preset) {
+
+                    return;
+
+                }
+
+
+                aplicarPreset(
+                    preset
+                );
+
+
+                presets.forEach(
+                    function (item) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                converter();
+
+            }
+        );
+
+    }
+);
+
+
+// =========================================
+// APLICAR PRESET
+// =========================================
+
+function aplicarPreset(
+    preset
+) {
+
+    character.value =
+        preset.character;
+
+
+    characterSet.value =
+        preset.characterSet;
+
+
+    width.value =
+        preset.width;
+
+
+    contrast.value =
+        preset.contrast;
+
+
+    brightness.value =
+        preset.brightness;
+
+
+    density.value =
+        preset.density;
+
+
+    spacingX.value =
+        preset.spacingX;
+
+
+    spacingY.value =
+        preset.spacingY;
+
+
+    aspectRatio.value =
+        preset.aspectRatio;
+
+
+    invert.checked =
+        preset.invert;
 
 }
 
@@ -688,11 +1126,12 @@ copyButton.addEventListener(
     "click",
     async function () {
 
-        const texto =
-            output.textContent;
+        if (!currentText) {
 
-
-        if (!texto) {
+            mostrarStatus(
+                "NÃO HÁ TEXTO PARA COPIAR",
+                true
+            );
 
             return;
 
@@ -701,11 +1140,12 @@ copyButton.addEventListener(
 
         try {
 
-            await navigator.clipboard
-                .writeText(texto);
+            await navigator.clipboard.writeText(
+                currentText
+            );
 
 
-            const original =
+            const oldText =
                 copyButton.textContent;
 
 
@@ -713,26 +1153,27 @@ copyButton.addEventListener(
                 "COPIADO!";
 
 
+            mostrarStatus(
+                "TEXTO COPIADO",
+                false
+            );
+
+
             setTimeout(
                 function () {
 
                     copyButton.textContent =
-                        original;
+                        oldText;
 
                 },
-                1500
+                1200
             );
 
+        }
 
-        } catch (erro) {
+        catch (error) {
 
-            console.error(
-                "Erro ao copiar:",
-                erro
-            );
-
-
-            copiarFallback(texto);
+            copiarFallback();
 
         }
 
@@ -741,10 +1182,10 @@ copyButton.addEventListener(
 
 
 // =========================================
-// FALLBACK DE CÓPIA
+// FALLBACK COPY
 // =========================================
 
-function copiarFallback(texto) {
+function copiarFallback() {
 
     const textarea =
         document.createElement(
@@ -753,14 +1194,14 @@ function copiarFallback(texto) {
 
 
     textarea.value =
-        texto;
+        currentText;
 
 
     textarea.style.position =
         "fixed";
 
-    textarea.style.opacity =
-        "0";
+    textarea.style.left =
+        "-9999px";
 
 
     document.body.appendChild(
@@ -778,26 +1219,18 @@ function copiarFallback(texto) {
         );
 
 
-        copyButton.textContent =
-            "COPIADO!";
-
-
-        setTimeout(
-            function () {
-
-                copyButton.textContent =
-                    "COPIAR TEXTO";
-
-            },
-            1500
+        mostrarStatus(
+            "TEXTO COPIADO",
+            false
         );
 
+    }
 
-    } catch (erro) {
+    catch (error) {
 
-        console.error(
-            "Erro ao copiar:",
-            erro
+        mostrarStatus(
+            "NÃO FOI POSSÍVEL COPIAR",
+            true
         );
 
     }
@@ -811,6 +1244,85 @@ function copiarFallback(texto) {
 
 
 // =========================================
+// DOWNLOAD TXT
+// =========================================
+
+downloadButton.addEventListener(
+    "click",
+    function () {
+
+        if (!currentText) {
+
+            mostrarStatus(
+                "NÃO HÁ TEXTO PARA BAIXAR",
+                true
+            );
+
+            return;
+
+        }
+
+
+        const blob =
+            new Blob(
+                [
+                    currentText
+                ],
+                {
+                    type:
+                        "text/plain;charset=utf-8"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            url;
+
+
+        link.download =
+            "galactus-text-art.txt";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        document.body.removeChild(
+            link
+        );
+
+
+        URL.revokeObjectURL(
+            url
+        );
+
+
+        mostrarStatus(
+            "ARQUIVO TXT GERADO",
+            false
+        );
+
+    }
+);
+
+
+// =========================================
 // LIMPAR
 // =========================================
 
@@ -818,37 +1330,219 @@ clearButton.addEventListener(
     "click",
     function () {
 
-        imagem = null;
+        image = null;
 
-        imageInput.value = "";
+        currentText = "";
 
-        fileName.textContent =
-            "NENHUMA IMAGEM SELECIONADA";
+
+        imageInput.value =
+            "";
+
+
+        imagePreview.src =
+            "";
+
+
+        imagePreview.style.display =
+            "none";
+
+
+        originalEmpty.style.display =
+            "flex";
+
+
+        miniOutput.textContent =
+            "";
+
+
+        miniEmpty.style.display =
+            "flex";
 
 
         output.textContent =
             "";
 
 
-        emptyMessage.style.display =
+        outputEmpty.style.display =
             "flex";
 
 
-        resultInfo.textContent =
+        fileInfo.textContent =
+            "NENHUMA IMAGEM";
+
+
+        dimensions.textContent =
+            "0 × 0";
+
+
+        resultStats.textContent =
             "0 caracteres";
 
 
-        canvas.width = 1;
+        previewType.textContent =
+            "DOTS";
 
-        canvas.height = 1;
 
-
-        ctx.clearRect(
-            0,
-            0,
-            1,
-            1
+        mostrarStatus(
+            "PROJETO LIMPO",
+            false
         );
 
     }
 );
+
+
+// =========================================
+// STATUS
+// =========================================
+
+function mostrarStatus(
+    message,
+    error
+) {
+
+    status.textContent =
+        message;
+
+
+    status.classList.toggle(
+        "success",
+        !error
+    );
+
+}
+
+
+// =========================================
+// TAMANHO DO ARQUIVO
+// =========================================
+
+function formatBytes(
+    bytes
+) {
+
+    if (bytes === 0) {
+
+        return "0 B";
+
+    }
+
+
+    const units =
+        [
+            "B",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(
+            1024,
+            index
+        )
+    ).toFixed(1)
+    + " "
+    + units[index];
+
+}
+
+
+// =========================================
+// ESTATÍSTICAS
+// =========================================
+
+function atualizarEstatisticas(
+    text
+) {
+
+    const characters =
+        text.length;
+
+
+    const lines =
+        text.split("\n").length - 1;
+
+
+    const visibleCharacters =
+        text.replace(
+            /\n/g,
+            ""
+        ).length;
+
+
+    resultStats.textContent =
+        `${visibleCharacters.toLocaleString("pt-BR")} caracteres • ${lines} linhas`;
+
+}
+
+
+// =========================================
+// ATALHOS
+// =========================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        // CTRL + V
+        if (
+            event.ctrlKey &&
+            event.key.toLowerCase() === "v"
+        ) {
+
+            /*
+                O navegador trata o Ctrl+V
+                normalmente. Não interferimos.
+            */
+
+        }
+
+
+        // CTRL + C
+        if (
+            event.ctrlKey &&
+            event.key.toLowerCase() === "c"
+        ) {
+
+            /*
+                Não interceptamos porque
+                o usuário pode copiar texto
+                normalmente.
+            */
+
+        }
+
+
+        // ESC
+        if (
+            event.key === "Escape"
+        ) {
+
+            /*
+                ESC limpa o foco de inputs.
+            */
+
+            document.activeElement.blur();
+
+        }
+
+    }
+);
+
+
+// =========================================
+// INICIALIZAÇÃO
+// =========================================
+
+atualizarValores();
+

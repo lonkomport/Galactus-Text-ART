@@ -14,17 +14,25 @@
 ========================================= */
 
 :root {
+
     --background: #080808;
+
     --surface: #101010;
+
     --surface-2: #0c0c0c;
+
     --border: #252525;
-    --border-light: #3a3a3a;
+
+    --border-light: #3d3d3d;
 
     --text: #ffffff;
+
     --muted: #777777;
-    --muted-light: #999999;
+
+    --dark-muted: #3f3f3f;
 
     --transition: 0.2s ease;
+
 }
 
 
@@ -33,18 +41,22 @@
 ========================================= */
 
 body {
+
     min-height: 100vh;
 
-    background: var(--background);
+    padding: 40px 25px;
 
-    color: var(--text);
+    background:
+        var(--background);
+
+    color:
+        var(--text);
 
     font-family:
         Arial,
         Helvetica,
         sans-serif;
 
-    padding: 45px 30px;
 }
 
 
@@ -53,11 +65,13 @@ body {
 ========================================= */
 
 .app {
+
     width: 100%;
 
-    max-width: 1100px;
+    max-width: 1200px;
 
-    margin: 0 auto;
+    margin: auto;
+
 }
 
 
@@ -66,6 +80,7 @@ body {
 ========================================= */
 
 .header {
+
     display: flex;
 
     justify-content: space-between;
@@ -73,143 +88,43 @@ body {
     align-items: flex-start;
 
     margin-bottom: 35px;
+
 }
 
 
-.brand h1 {
-    font-size: 34px;
+.brand {
 
-    line-height: 0.88;
+    font-size: 38px;
+
+    line-height: 0.87;
+
+    font-weight: 800;
 
     letter-spacing: 4px;
 
-    font-weight: 800;
 }
 
 
-.brand p {
-    margin-top: 14px;
+.subtitle {
 
-    color: var(--muted);
+    margin-top: 15px;
 
-    font-size: 12px;
+    color:
+        var(--muted);
 
-    line-height: 1.3;
+    font-size: 9px;
+
+    line-height: 1.5;
 
     letter-spacing: 1.5px;
 
-    text-transform: uppercase;
 }
 
 
 .version {
-    color: #555;
 
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-}
-
-
-/* =========================================
-   WORKSPACE
-========================================= */
-
-.workspace {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 18px;
-}
-
-
-/* =========================================
-   UPLOAD
-========================================= */
-
-.upload-area {
-    width: 100%;
-}
-
-
-.upload-button {
-    min-height: 150px;
-
-    width: 100%;
-
-    border: 1px dashed #383838;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 10px;
-
-    color: #888;
-
-    cursor: pointer;
-
-    font-size: 11px;
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-
-    transition:
-        border-color var(--transition),
-        color var(--transition),
-        background var(--transition);
-}
-
-
-.upload-button:hover {
-    border-color: #aaa;
-
-    color: white;
-
-    background: #0d0d0d;
-}
-
-
-.upload-icon {
-    width: 34px;
-
-    height: 34px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    border: 1px solid #444;
-
-    font-size: 20px;
-
-    font-weight: normal;
-
-    line-height: 1;
-}
-
-
-.upload-button:hover .upload-icon {
-    border-color: #aaa;
-}
-
-
-.file-name {
-    margin-top: 8px;
-
-    color: #555;
+    color:
+        #444;
 
     font-family:
         "Courier New",
@@ -217,9 +132,476 @@ body {
 
     font-size: 9px;
 
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   UPLOAD
+========================================= */
+
+.upload-section {
+
+    margin-bottom: 18px;
+
+}
+
+
+.upload-box {
+
+    width: 100%;
+
+    min-height: 130px;
+
+    border:
+        1px dashed
+        #363636;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    transition:
+        var(--transition);
+
+}
+
+
+.upload-box:hover {
+
+    background:
+        #0d0d0d;
+
+    border-color:
+        #888;
+
+}
+
+
+.upload-box.dragging {
+
+    background:
+        #121212;
+
+    border-color:
+        white;
+
+}
+
+
+.upload-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    border:
+        1px solid
+        #444;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        #777;
+
+    font-size: 20px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.upload-title {
+
+    color:
+        #888;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+.upload-subtitle {
+
+    margin-top: 6px;
+
+    color:
+        #3d3d3d;
+
+    font-size: 8px;
+
     letter-spacing: 1px;
 
-    text-transform: uppercase;
+}
+
+
+.file-info {
+
+    margin-top: 8px;
+
+    color:
+        #444;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.preview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 1px;
+
+    margin-bottom: 18px;
+
+    background:
+        var(--border);
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.panel {
+
+    background:
+        var(--surface);
+
+    min-width: 0;
+
+}
+
+
+.panel-header {
+
+    height: 42px;
+
+    padding:
+        0 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.panel-header span:first-child {
+
+    color:
+        #777;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.panel-header span:last-child {
+
+    color:
+        #444;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================
+   ORIGINAL PREVIEW
+========================================= */
+
+.original-preview {
+
+    height: 300px;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        #050505;
+
+}
+
+
+.original-preview::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.12;
+
+    background-image:
+        linear-gradient(
+            #555 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            #555 1px,
+            transparent 1px
+        );
+
+    background-size:
+        20px 20px;
+
+}
+
+
+#imagePreview {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 100%;
+
+    max-height: 100%;
+
+    object-fit: contain;
+
+    display: none;
+
+}
+
+
+/* =========================================
+   MINI PREVIEW
+========================================= */
+
+.mini-preview {
+
+    height: 300px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        #000;
+
+}
+
+
+#miniOutput {
+
+    width: 100%;
+
+    height: 100%;
+
+    padding: 15px;
+
+    overflow: hidden;
+
+    color:
+        white;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 5px;
+
+    line-height: 1;
+
+    white-space: pre;
+
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-preview {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        #333;
+
+}
+
+
+.empty-preview span {
+
+    font-size: 26px;
+
+}
+
+
+.empty-preview small {
+
+    margin-top: 8px;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   PRESETS
+========================================= */
+
+.preset-section {
+
+    margin-bottom: 18px;
+
+}
+
+
+.section-title {
+
+    margin-bottom: 8px;
+
+    color:
+        #555;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+.preset-list {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+}
+
+
+.preset {
+
+    padding:
+        9px 13px;
+
+    border:
+        1px solid
+        #292929;
+
+    background:
+        #0d0d0d;
+
+    color:
+        #666;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        var(--transition);
+
+}
+
+
+.preset:hover {
+
+    color:
+        white;
+
+    border-color:
+        #666;
+
+}
+
+
+.preset.active {
+
+    background:
+        white;
+
+    color:
+        black;
+
+    border-color:
+        white;
+
 }
 
 
@@ -228,33 +610,41 @@ body {
 ========================================= */
 
 .controls {
+
     display: grid;
 
     grid-template-columns:
         100px
-        1fr
-        1fr
-        1fr
-        1fr
-        130px
-        100px;
+        150px
+        repeat(4, 1fr)
+        repeat(2, 1fr)
+        140px
+        80px;
 
     gap: 1px;
 
-    background: var(--border);
+    margin-bottom: 18px;
 
-    border: 1px solid var(--border);
+    background:
+        var(--border);
+
+    border:
+        1px solid
+        var(--border);
+
 }
 
 
 .control {
+
     min-width: 0;
 
-    min-height: 105px;
+    min-height: 100px;
 
-    padding: 16px;
+    padding: 15px;
 
-    background: var(--surface);
+    background:
+        var(--surface);
 
     display: flex;
 
@@ -263,37 +653,46 @@ body {
     justify-content: center;
 
     gap: 12px;
-}
 
-
-.control-title {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
 }
 
 
 .control label {
-    color: #777;
 
-    font-size: 9px;
+    color:
+        #777;
+
+    font-size: 8px;
 
     font-weight: bold;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
+
 }
 
 
-.control-title span {
-    color: #aaa;
+.control-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.control-top span {
+
+    color:
+        #aaa;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 10px;
+    font-size: 9px;
+
 }
 
 
@@ -302,33 +701,77 @@ body {
 ========================================= */
 
 #character {
-    width: 52px;
 
-    height: 40px;
+    width: 50px;
 
-    background: #080808;
+    height: 38px;
 
-    border: 1px solid #333;
+    background:
+        #080808;
 
-    color: white;
+    border:
+        1px solid
+        #333;
+
+    color:
+        white;
 
     outline: none;
 
     text-align: center;
 
-    font-size: 20px;
-
     font-family:
         "Courier New",
         monospace;
 
-    transition:
-        border-color var(--transition);
+    font-size: 20px;
+
 }
 
 
 #character:focus {
-    border-color: #777;
+
+    border-color:
+        #777;
+
+}
+
+
+/* =========================================
+   SELECT
+========================================= */
+
+select {
+
+    width: 100%;
+
+    height: 36px;
+
+    padding:
+        0 8px;
+
+    background:
+        #080808;
+
+    border:
+        1px solid
+        #333;
+
+    color:
+        white;
+
+    outline: none;
+
+    font-size: 8px;
+
+}
+
+
+select:focus {
+
+    border-color:
+        #777;
+
 }
 
 
@@ -337,81 +780,52 @@ body {
 ========================================= */
 
 input[type="range"] {
+
     width: 100%;
 
     height: 3px;
 
     appearance: none;
 
-    background: #333;
+    background:
+        #333;
 
     outline: none;
 
     cursor: pointer;
+
 }
 
 
 input[type="range"]::-webkit-slider-thumb {
+
     appearance: none;
 
-    width: 12px;
+    width: 11px;
 
-    height: 12px;
+    height: 11px;
 
     border-radius: 50%;
 
-    background: white;
+    background:
+        white;
 
-    cursor: pointer;
 }
 
 
 input[type="range"]::-moz-range-thumb {
-    width: 12px;
 
-    height: 12px;
+    width: 11px;
+
+    height: 11px;
 
     border: none;
 
     border-radius: 50%;
 
-    background: white;
+    background:
+        white;
 
-    cursor: pointer;
-}
-
-
-/* =========================================
-   SELECT
-========================================= */
-
-#mode {
-    width: 100%;
-
-    height: 35px;
-
-    padding: 0 8px;
-
-    background: #080808;
-
-    border: 1px solid #333;
-
-    color: white;
-
-    outline: none;
-
-    font-size: 10px;
-
-    font-family:
-        Arial,
-        sans-serif;
-
-    cursor: pointer;
-}
-
-
-#mode:focus {
-    border-color: #777;
 }
 
 
@@ -419,43 +833,51 @@ input[type="range"]::-moz-range-thumb {
    SWITCH
 ========================================= */
 
-.invert-control {
+.toggle-control {
+
     align-items: center;
+
 }
 
 
 .switch {
+
     position: relative;
 
     width: 38px;
 
     height: 20px;
 
-    display: block;
-
     cursor: pointer;
+
 }
 
 
 .switch input {
+
     display: none;
+
 }
 
 
-.slider {
+.switch span {
+
     position: absolute;
 
     inset: 0;
 
-    background: #222;
+    background:
+        #222;
 
-    border: 1px solid #444;
+    border:
+        1px solid
+        #444;
 
-    transition: var(--transition);
 }
 
 
-.slider::before {
+.switch span::before {
+
     content: "";
 
     position: absolute;
@@ -464,51 +886,60 @@ input[type="range"]::-moz-range-thumb {
 
     height: 12px;
 
-    left: 3px;
-
     top: 3px;
 
-    background: #777;
+    left: 3px;
 
-    transition: var(--transition);
+    background:
+        #777;
+
+    transition:
+        var(--transition);
+
 }
 
 
-.switch input:checked + .slider {
-    background: #444;
+.switch input:checked + span {
+
+    background:
+        #444;
+
 }
 
 
-.switch input:checked + .slider::before {
-    transform: translateX(18px);
+.switch input:checked + span::before {
 
-    background: white;
+    transform:
+        translateX(18px);
+
+    background:
+        white;
+
 }
 
 
 /* =========================================
-   RESULT AREA
+   RESULT
 ========================================= */
 
-.result-area {
-    width: 100%;
+.result-section {
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
-    background: #050505;
+    background:
+        #050505;
 
-    overflow: hidden;
 }
 
-
-/* =========================================
-   RESULT HEADER
-========================================= */
 
 .result-header {
+
     min-height: 58px;
 
-    padding: 10px 15px;
+    padding:
+        10px 15px;
 
     display: flex;
 
@@ -516,60 +947,73 @@ input[type="range"]::-moz-range-thumb {
 
     align-items: center;
 
-    background: #101010;
+    gap: 15px;
 
-    border-bottom: 1px solid var(--border);
-}
+    background:
+        #101010;
 
+    border-bottom:
+        1px solid
+        var(--border);
 
-.result-header > div:first-child {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
 }
 
 
 .result-title {
-    color: #777;
 
-    font-size: 10px;
+    color:
+        #777;
+
+    font-size: 9px;
 
     font-weight: bold;
 
     letter-spacing: 2px;
+
 }
 
 
-.result-info {
-    color: #444;
+.result-stats {
+
+    margin-left: 12px;
+
+    color:
+        #444;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 9px;
+    font-size: 8px;
+
 }
 
 
-.result-actions {
+.actions {
+
     display: flex;
 
-    gap: 8px;
+    gap: 6px;
+
 }
 
 
-.result-actions button {
-    padding: 9px 13px;
+.button {
 
-    border: 1px solid #3a3a3a;
+    padding:
+        9px 13px;
 
-    background: transparent;
+    border:
+        1px solid
+        #333;
 
-    color: white;
+    background:
+        transparent;
 
-    font-size: 9px;
+    color:
+        white;
+
+    font-size: 8px;
 
     font-weight: bold;
 
@@ -577,23 +1021,34 @@ input[type="range"]::-moz-range-thumb {
 
     cursor: pointer;
 
-    transition: var(--transition);
+    transition:
+        var(--transition);
+
 }
 
 
-.secondary-button:hover {
-    border-color: #777;
+.button:hover {
 
-    background: #181818;
+    border-color:
+        #888;
+
+    background:
+        #181818;
+
 }
 
 
-.primary-button:hover {
-    background: white;
+.button.primary:hover {
 
-    color: black;
+    background:
+        white;
 
-    border-color: white;
+    color:
+        black;
+
+    border-color:
+        white;
+
 }
 
 
@@ -601,31 +1056,36 @@ input[type="range"]::-moz-range-thumb {
    OUTPUT
 ========================================= */
 
-.output-wrapper {
+.output-container {
+
+    min-height: 460px;
+
     position: relative;
 
-    min-height: 430px;
+    background:
+        #000;
 
-    background: #000;
 }
 
 
 #output {
+
     width: 100%;
 
-    min-height: 430px;
+    min-height: 460px;
 
     padding: 25px;
 
     overflow: auto;
 
-    color: white;
+    background:
+        transparent;
 
-    background: transparent;
+    color:
+        white;
 
     font-family:
         "Courier New",
-        Courier,
         monospace;
 
     font-size: 8px;
@@ -634,17 +1094,11 @@ input[type="range"]::-moz-range-thumb {
 
     white-space: pre;
 
-    tab-size: 1;
-
-    outline: none;
 }
 
 
-/* =========================================
-   EMPTY MESSAGE
-========================================= */
+.output-empty {
 
-.empty-message {
     position: absolute;
 
     inset: 0;
@@ -659,38 +1113,103 @@ input[type="range"]::-moz-range-thumb {
 
     pointer-events: none;
 
-    color: #333;
+    color:
+        #333;
+
 }
 
 
-.empty-message span {
+.output-empty div {
+
     font-size: 30px;
 
-    font-weight: 200;
-
-    line-height: 1;
 }
 
 
-.empty-message p {
-    margin-top: 12px;
+.output-empty p {
 
-    font-size: 10px;
+    margin-top: 10px;
+
+    font-size: 9px;
 
     font-weight: bold;
 
     letter-spacing: 2px;
+
 }
 
 
-.empty-message small {
+.output-empty small {
+
     margin-top: 6px;
 
-    color: #222;
+    color:
+        #222;
 
-    font-size: 9px;
+    font-size: 8px;
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+
+    margin-top: 10px;
+
+    color:
+        #444;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
 
     letter-spacing: 1px;
+
+}
+
+
+.status.success {
+
+    color:
+        #777;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+
+    margin-top: 20px;
+
+    padding-top: 14px;
+
+    border-top:
+        1px solid
+        #171717;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color:
+        #333;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
 }
 
 
@@ -699,150 +1218,210 @@ input[type="range"]::-moz-range-thumb {
 ========================================= */
 
 #output::-webkit-scrollbar {
+
     width: 8px;
 
     height: 8px;
+
 }
 
 
 #output::-webkit-scrollbar-track {
-    background: #080808;
+
+    background:
+        #080808;
+
 }
 
 
 #output::-webkit-scrollbar-thumb {
-    background: #292929;
+
+    background:
+        #292929;
+
 }
 
 
 #output::-webkit-scrollbar-thumb:hover {
-    background: #444;
+
+    background:
+        #444;
+
 }
 
 
 /* =========================================
-   RESPONSIVE TABLET
+   TABLET
 ========================================= */
 
-@media (max-width: 950px) {
-
-    body {
-        padding: 30px 20px;
-    }
-
+@media (max-width: 1100px) {
 
     .controls {
+
         grid-template-columns:
-            1fr
-            1fr
-            1fr;
-    }
+            repeat(4, 1fr);
 
-
-    .character-control {
-        grid-column: span 1;
-    }
-
-
-    .invert-control {
-        align-items: flex-start;
     }
 
 }
 
 
 /* =========================================
-   RESPONSIVE MOBILE
+   TABLET SMALL
 ========================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
 
     body {
-        padding: 20px 12px;
+
+        padding:
+            30px 15px;
+
     }
 
 
-    .header {
-        margin-bottom: 25px;
-    }
+    .preview-grid {
 
+        grid-template-columns:
+            1fr;
 
-    .brand h1 {
-        font-size: 25px;
-
-        letter-spacing: 3px;
-    }
-
-
-    .brand p {
-        font-size: 9px;
-    }
-
-
-    .version {
-        font-size: 8px;
-    }
-
-
-    .upload-button {
-        min-height: 120px;
     }
 
 
     .controls {
-        grid-template-columns: 1fr;
-    }
 
+        grid-template-columns:
+            1fr 1fr;
 
-    .control {
-        min-height: 90px;
-    }
-
-
-    .invert-control {
-        flex-direction: row;
-
-        justify-content: space-between;
-
-        align-items: center;
     }
 
 
     .result-header {
+
         flex-direction: column;
 
         align-items: stretch;
 
-        gap: 12px;
     }
 
 
-    .result-header > div:first-child {
-        justify-content: space-between;
-    }
+    .actions {
 
-
-    .result-actions {
         width: 100%;
+
     }
 
 
-    .result-actions button {
+    .button {
+
         flex: 1;
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+    body {
+
+        padding:
+            20px 10px;
+
+    }
+
+
+    .header {
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .brand {
+
+        font-size: 28px;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .version {
+
+        font-size: 7px;
+
+    }
+
+
+    .controls {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .control {
+
+        min-height: 85px;
+
+    }
+
+
+    .original-preview,
+    .mini-preview {
+
+        height: 240px;
+
+    }
+
+
+    .output-container,
+    #output {
+
+        min-height: 350px;
+
     }
 
 
     #output {
-        min-height: 350px;
 
         padding: 15px;
 
         font-size: 6px;
+
     }
 
 
-    .output-wrapper {
-        min-height: 350px;
+    .actions {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .button:last-child {
+
+        grid-column:
+            span 2;
+
+    }
+
+
+    .footer {
+
+        flex-direction: column;
+
+        gap: 6px;
+
     }
 
 }
