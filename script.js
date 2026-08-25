@@ -1,6 +1,6 @@
 // =========================================
 // GALACTUS TEXT ART
-// V4.0
+// V5.0
 // =========================================
 
 
@@ -25,15 +25,6 @@ const originalEmpty =
 
 const dimensions =
     document.getElementById("dimensions");
-
-const miniOutput =
-    document.getElementById("miniOutput");
-
-const miniEmpty =
-    document.getElementById("miniEmpty");
-
-const previewType =
-    document.getElementById("previewType");
 
 const character =
     document.getElementById("character");
@@ -80,8 +71,14 @@ const spacingYValue =
 const aspectRatio =
     document.getElementById("aspectRatio");
 
+const renderMode =
+    document.getElementById("renderMode");
+
 const invert =
     document.getElementById("invert");
+
+const proportional =
+    document.getElementById("proportional");
 
 const output =
     document.getElementById("output");
@@ -110,8 +107,13 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
-const presets =
+const presetButtons =
     document.querySelectorAll(".preset");
+
+const quickWidthButtons =
+    document.querySelectorAll(
+        ".quick-width button"
+    );
 
 
 // =========================================
@@ -124,15 +126,15 @@ let currentText = "";
 
 
 // =========================================
-// CONJUNTOS DE CARACTERES
+// PALETAS
 // =========================================
 
-const CHARACTER_SETS = {
+const palettes = {
 
     single: null,
 
     dots:
-        " ·•●",
+        " ●",
 
     ascii:
         " .'`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
@@ -153,13 +155,13 @@ const CHARACTER_SETS = {
 // PRESETS
 // =========================================
 
-const PRESETS = {
+const presets = {
 
     default: {
 
         character: "●",
 
-        characterSet: "single",
+        set: "single",
 
         width: 80,
 
@@ -173,20 +175,22 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.5,
+        aspect: "0.50",
+
+        mode: "normal",
 
         invert: false
 
     },
 
 
-    dot: {
+    dots: {
 
         character: "●",
 
-        characterSet: "dots",
+        set: "dots",
 
-        width: 80,
+        width: 90,
 
         contrast: 120,
 
@@ -198,7 +202,9 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.5,
+        aspect: "0.50",
+
+        mode: "normal",
 
         invert: false
 
@@ -209,7 +215,7 @@ const PRESETS = {
 
         character: "#",
 
-        characterSet: "ascii",
+        set: "ascii",
 
         width: 100,
 
@@ -223,7 +229,9 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.5,
+        aspect: "0.50",
+
+        mode: "normal",
 
         invert: false
 
@@ -234,9 +242,9 @@ const PRESETS = {
 
         character: "█",
 
-        characterSet: "blocks",
+        set: "blocks",
 
-        width: 90,
+        width: 80,
 
         contrast: 140,
 
@@ -248,7 +256,63 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.6,
+        aspect: "0.60",
+
+        mode: "dense",
+
+        invert: false
+
+    },
+
+
+    shade: {
+
+        character: "▓",
+
+        set: "shade",
+
+        width: 90,
+
+        contrast: 120,
+
+        brightness: 0,
+
+        density: 100,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspect: "0.50",
+
+        mode: "normal",
+
+        invert: false
+
+    },
+
+
+    minimal: {
+
+        character: "•",
+
+        set: "minimal",
+
+        width: 80,
+
+        contrast: 90,
+
+        brightness: 5,
+
+        density: 80,
+
+        spacingX: 1,
+
+        spacingY: 1,
+
+        aspect: "0.50",
+
+        mode: "threshold",
 
         invert: false
 
@@ -259,7 +323,7 @@ const PRESETS = {
 
         character: "●",
 
-        characterSet: "dots",
+        set: "dots",
 
         width: 120,
 
@@ -273,7 +337,9 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.5,
+        aspect: "0.50",
+
+        mode: "dense",
 
         invert: false
 
@@ -284,11 +350,11 @@ const PRESETS = {
 
         character: "·",
 
-        characterSet: "dots",
+        set: "minimal",
 
         width: 80,
 
-        contrast: 70,
+        contrast: 65,
 
         brightness: 15,
 
@@ -298,7 +364,9 @@ const PRESETS = {
 
         spacingY: 1,
 
-        aspectRatio: 0.5,
+        aspect: "0.50",
+
+        mode: "normal",
 
         invert: false
 
@@ -308,16 +376,15 @@ const PRESETS = {
 
 
 // =========================================
-// UPLOAD
+// INPUT
 // =========================================
 
 imageInput.addEventListener(
     "change",
-    function () {
+    () => {
 
         const file =
             imageInput.files[0];
-
 
         if (!file) {
 
@@ -325,24 +392,23 @@ imageInput.addEventListener(
 
         }
 
-
-        carregarImagem(file);
+        loadImage(file);
 
     }
 );
 
 
 // =========================================
-// CARREGAR IMAGEM
+// LOAD IMAGE
 // =========================================
 
-function carregarImagem(file) {
+function loadImage(file) {
 
     if (
         !file.type.startsWith("image/")
     ) {
 
-        mostrarStatus(
+        setStatus(
             "ARQUIVO INVÁLIDO",
             true
         );
@@ -361,17 +427,16 @@ function carregarImagem(file) {
 
 
     reader.onload =
-        function (event) {
+        event => {
 
-            const newImage =
+            const img =
                 new Image();
 
 
-            newImage.onload =
-                function () {
+            img.onload =
+                () => {
 
-                    image =
-                        newImage;
+                    image = img;
 
 
                     imagePreview.src =
@@ -387,41 +452,41 @@ function carregarImagem(file) {
 
 
                     dimensions.textContent =
-                        `${image.width} × ${image.height}`;
+                        `${img.width} × ${img.height}`;
 
 
-                    mostrarStatus(
+                    setStatus(
                         "IMAGEM CARREGADA",
                         false
                     );
 
 
-                    converter();
+                    convert();
 
                 };
 
 
-            newImage.onerror =
-                function () {
+            img.onerror =
+                () => {
 
-                    mostrarStatus(
-                        "ERRO AO CARREGAR IMAGEM",
+                    setStatus(
+                        "ERRO AO PROCESSAR IMAGEM",
                         true
                     );
 
                 };
 
 
-            newImage.src =
+            img.src =
                 event.target.result;
 
         };
 
 
     reader.onerror =
-        function () {
+        () => {
 
-            mostrarStatus(
+            setStatus(
                 "ERRO AO LER ARQUIVO",
                 true
             );
@@ -440,7 +505,7 @@ function carregarImagem(file) {
 
 uploadBox.addEventListener(
     "dragover",
-    function (event) {
+    event => {
 
         event.preventDefault();
 
@@ -454,7 +519,7 @@ uploadBox.addEventListener(
 
 uploadBox.addEventListener(
     "dragleave",
-    function () {
+    () => {
 
         uploadBox.classList.remove(
             "dragging"
@@ -466,10 +531,9 @@ uploadBox.addEventListener(
 
 uploadBox.addEventListener(
     "drop",
-    function (event) {
+    event => {
 
         event.preventDefault();
-
 
         uploadBox.classList.remove(
             "dragging"
@@ -480,52 +544,60 @@ uploadBox.addEventListener(
             event.dataTransfer.files[0];
 
 
-        if (!file) {
+        if (file) {
 
-            return;
+            loadImage(file);
 
         }
 
-
-        carregarImagem(file);
-
     }
 );
 
 
 // =========================================
-// CONTROLES
+// CONTROLS
 // =========================================
 
-const controls =
-    [
+const reactiveControls = [
 
-        width,
-        contrast,
-        brightness,
-        density,
-        spacingX,
-        spacingY,
-        character,
-        characterSet,
-        aspectRatio,
-        invert
+    character,
 
-    ];
+    characterSet,
+
+    width,
+
+    contrast,
+
+    brightness,
+
+    density,
+
+    spacingX,
+
+    spacingY,
+
+    aspectRatio,
+
+    renderMode,
+
+    invert,
+
+    proportional
+
+];
 
 
-controls.forEach(
-    function (control) {
+reactiveControls.forEach(
+    control => {
 
         control.addEventListener(
             "input",
-            converter
+            convert
         );
-
 
         control.addEventListener(
             "change",
-            converter
+            convert
         );
 
     }
@@ -533,12 +605,35 @@ controls.forEach(
 
 
 // =========================================
-// CONVERTER
+// QUICK WIDTH
 // =========================================
 
-function converter() {
+quickWidthButtons.forEach(
+    button => {
 
-    atualizarValores();
+        button.addEventListener(
+            "click",
+            () => {
+
+                width.value =
+                    button.dataset.width;
+
+                convert();
+
+            }
+        );
+
+    }
+);
+
+
+// =========================================
+// CONVERT
+// =========================================
+
+function convert() {
+
+    updateValues();
 
 
     if (!image) {
@@ -549,43 +644,33 @@ function converter() {
 
 
     const config =
-        obterConfiguracao();
+        getConfig();
 
 
-    const result =
-        gerarTextArt(config);
+    const text =
+        createTextArt(
+            config
+        );
 
 
     currentText =
-        result;
+        text;
 
 
     output.textContent =
-        result;
-
-
-    miniOutput.textContent =
-        result;
+        text;
 
 
     outputEmpty.style.display =
         "none";
 
 
-    miniEmpty.style.display =
-        "none";
-
-
-    atualizarEstatisticas(
-        result
+    updateStats(
+        text
     );
 
 
-    previewType.textContent =
-        config.characterSet.toUpperCase();
-
-
-    mostrarStatus(
+    setStatus(
         "CONVERSÃO ATUALIZADA",
         false
     );
@@ -594,44 +679,48 @@ function converter() {
 
 
 // =========================================
-// CONFIGURAÇÃO
+// CONFIG
 // =========================================
 
-function obterConfiguracao() {
+function getConfig() {
 
     return {
 
         width:
-            parseInt(width.value),
+            Number(width.value),
 
         contrast:
-            parseInt(contrast.value),
+            Number(contrast.value),
 
         brightness:
-            parseInt(brightness.value),
+            Number(brightness.value),
 
         density:
-            parseInt(density.value),
+            Number(density.value),
 
         spacingX:
-            parseInt(spacingX.value),
+            Number(spacingX.value),
 
         spacingY:
-            parseInt(spacingY.value),
+            Number(spacingY.value),
 
-        aspectRatio:
-            parseFloat(
-                aspectRatio.value
-            ),
+        aspect:
+            Number(aspectRatio.value),
 
         character:
             character.value || "●",
 
-        characterSet:
+        set:
             characterSet.value,
 
+        mode:
+            renderMode.value,
+
         invert:
-            invert.checked
+            invert.checked,
+
+        proportional:
+            proportional.checked
 
     };
 
@@ -639,28 +728,47 @@ function obterConfiguracao() {
 
 
 // =========================================
-// GERAR TEXT ART
+// CREATE TEXT ART
 // =========================================
 
-function gerarTextArt(config) {
+function createTextArt(config) {
 
     const targetWidth =
         config.width;
 
 
-    const imageRatio =
+    const ratio =
         image.height /
         image.width;
 
 
-    const targetHeight =
-        Math.max(
-            1,
+    let targetHeight;
+
+
+    if (config.proportional) {
+
+        targetHeight =
             Math.floor(
                 targetWidth *
-                imageRatio *
-                config.aspectRatio
-            )
+                ratio *
+                config.aspect
+            );
+
+    } else {
+
+        targetHeight =
+            Math.floor(
+                targetWidth *
+                ratio
+            );
+
+    }
+
+
+    targetHeight =
+        Math.max(
+            1,
+            targetHeight
         );
 
 
@@ -689,7 +797,7 @@ function gerarTextArt(config) {
     );
 
 
-    const pixels =
+    const data =
         ctx.getImageData(
             0,
             0,
@@ -721,102 +829,74 @@ function gerarTextArt(config) {
                 ) * 4;
 
 
-            const red =
-                pixels[index];
+            const r =
+                data[index];
 
 
-            const green =
-                pixels[index + 1];
+            const g =
+                data[index + 1];
 
 
-            const blue =
-                pixels[index + 2];
+            const b =
+                data[index + 2];
 
 
-            const alpha =
-                pixels[index + 3];
+            const a =
+                data[index + 3];
 
 
-            // ---------------------------------
-            // BRILHO ORIGINAL
-            // ---------------------------------
-
-            let value =
+            let brightness =
                 (
-                    0.299 * red +
-                    0.587 * green +
-                    0.114 * blue
+                    0.299 * r +
+                    0.587 * g +
+                    0.114 * b
                 );
 
 
-            // ---------------------------------
-            // TRANSPARÊNCIA
-            // ---------------------------------
+            if (a < 128) {
 
-            if (alpha < 128) {
-
-                value = 255;
+                brightness = 255;
 
             }
 
 
-            // ---------------------------------
-            // BRILHO
-            // ---------------------------------
-
-            value +=
+            brightness +=
                 config.brightness;
 
 
-            value =
-                limitar(
-                    value,
+            brightness =
+                clamp(
+                    brightness,
                     0,
                     255
                 );
 
 
-            // ---------------------------------
-            // CONTRASTE
-            // ---------------------------------
-
-            value =
-                aplicarContraste(
-                    value,
+            brightness =
+                applyContrast(
+                    brightness,
                     config.contrast
                 );
 
 
-            // ---------------------------------
-            // INVERSÃO
-            // ---------------------------------
-
             if (config.invert) {
 
-                value =
-                    255 - value;
+                brightness =
+                    255 - brightness;
 
             }
 
 
-            // ---------------------------------
-            // DENSIDADE
-            // ---------------------------------
-
-            value =
-                aplicarDensidade(
-                    value,
+            brightness =
+                applyDensity(
+                    brightness,
                     config.density
                 );
 
 
-            // ---------------------------------
-            // CARACTERE
-            // ---------------------------------
-
             result +=
-                obterCaractere(
-                    value,
+                pixelToCharacter(
+                    brightness,
                     config
                 );
 
@@ -834,106 +914,107 @@ function gerarTextArt(config) {
 
 
 // =========================================
-// OBTER CARACTERE
+// PIXEL → CHARACTER
 // =========================================
 
-function obterCaractere(
-    value,
+function pixelToCharacter(
+    brightness,
     config
 ) {
 
-    const set =
-        CHARACTER_SETS[
-            config.characterSet
+    const palette =
+        palettes[
+            config.set
         ];
 
 
-    // -----------------------------------------
+    // =====================================
     // PERSONALIZADO
-    // -----------------------------------------
+    // =====================================
 
-    if (!set) {
+    if (!palette) {
 
-        /*
-            Para o modo personalizado,
-            o caractere aparece de acordo
-            com a intensidade.
-        */
+        if (
+            config.mode ===
+            "threshold"
+        ) {
 
-        if (value < 128) {
-
-            return config.character;
+            return brightness < 140
+                ? config.character
+                : " ";
 
         }
 
 
-        return " ";
+        if (
+            config.mode ===
+            "dense"
+        ) {
+
+            if (brightness < 70) {
+
+                return config.character;
+
+            }
+
+            if (brightness < 150) {
+
+                return config.character;
+
+            }
+
+            return " ";
+
+        }
+
+
+        return brightness < 128
+            ? config.character
+            : " ";
 
     }
 
 
-    // -----------------------------------------
+    // =====================================
     // PALETA
-    // -----------------------------------------
+    // =====================================
+
+    if (
+        config.mode ===
+        "threshold"
+    ) {
+
+        return brightness < 128
+            ? palette[
+                palette.length - 1
+            ]
+            : " ";
+
+    }
+
 
     const index =
         Math.floor(
             (
-                value / 255
+                brightness /
+                255
             ) *
             (
-                set.length - 1
+                palette.length - 1
             )
         );
 
 
-    return set[index];
+    return palette[index];
 
 }
 
 
 // =========================================
-// DENSIDADE
+// CONTRAST
 // =========================================
 
-function aplicarDensidade(
-    value,
-    density
-) {
-
-    const factor =
-        density / 100;
-
-
-    if (factor === 1) {
-
-        return value;
-
-    }
-
-
-    const result =
-        128 +
-        (
-            value - 128
-        ) /
-        factor;
-
-
-    return limitar(
-        result,
-        0,
-        255
-    );
-
-}
-
-
-// =========================================
-// CONTRASTE
-// =========================================
-
-function aplicarContraste(
+function applyContrast(
     value,
     contrast
 ) {
@@ -942,17 +1023,15 @@ function aplicarContraste(
         contrast / 100;
 
 
-    const result =
+    return clamp(
         128 +
         (
             value - 128
         ) *
-        factor;
+        factor,
 
-
-    return limitar(
-        result,
         0,
+
         255
     );
 
@@ -960,10 +1039,47 @@ function aplicarContraste(
 
 
 // =========================================
-// LIMITAR
+// DENSITY
 // =========================================
 
-function limitar(
+function applyDensity(
+    value,
+    density
+) {
+
+    if (
+        density === 100
+    ) {
+
+        return value;
+
+    }
+
+
+    const factor =
+        density / 100;
+
+
+    return clamp(
+        128 +
+        (
+            value - 128
+        ) /
+        factor,
+
+        0,
+
+        255
+    );
+
+}
+
+
+// =========================================
+// CLAMP
+// =========================================
+
+function clamp(
     value,
     min,
     max
@@ -981,30 +1097,25 @@ function limitar(
 
 
 // =========================================
-// ATUALIZAR VALORES
+// UPDATE VALUES
 // =========================================
 
-function atualizarValores() {
+function updateValues() {
 
     widthValue.textContent =
         width.value;
 
-
     contrastValue.textContent =
         contrast.value;
-
 
     brightnessValue.textContent =
         brightness.value;
 
-
     densityValue.textContent =
         density.value;
 
-
     spacingXValue.textContent =
         spacingX.value;
-
 
     spacingYValue.textContent =
         spacingY.value;
@@ -1016,19 +1127,19 @@ function atualizarValores() {
 // PRESETS
 // =========================================
 
-presets.forEach(
-    function (button) {
+presetButtons.forEach(
+    button => {
 
         button.addEventListener(
             "click",
-            function () {
+            () => {
 
                 const name =
                     button.dataset.preset;
 
 
                 const preset =
-                    PRESETS[name];
+                    presets[name];
 
 
                 if (!preset) {
@@ -1038,13 +1149,13 @@ presets.forEach(
                 }
 
 
-                aplicarPreset(
+                applyPreset(
                     preset
                 );
 
 
-                presets.forEach(
-                    function (item) {
+                presetButtons.forEach(
+                    item => {
 
                         item.classList.remove(
                             "active"
@@ -1059,7 +1170,7 @@ presets.forEach(
                 );
 
 
-                converter();
+                convert();
 
             }
         );
@@ -1069,48 +1180,42 @@ presets.forEach(
 
 
 // =========================================
-// APLICAR PRESET
+// APPLY PRESET
 // =========================================
 
-function aplicarPreset(
+function applyPreset(
     preset
 ) {
 
     character.value =
         preset.character;
 
-
     characterSet.value =
-        preset.characterSet;
-
+        preset.set;
 
     width.value =
         preset.width;
 
-
     contrast.value =
         preset.contrast;
-
 
     brightness.value =
         preset.brightness;
 
-
     density.value =
         preset.density;
-
 
     spacingX.value =
         preset.spacingX;
 
-
     spacingY.value =
         preset.spacingY;
 
-
     aspectRatio.value =
-        preset.aspectRatio;
+        preset.aspect;
 
+    renderMode.value =
+        preset.mode;
 
     invert.checked =
         preset.invert;
@@ -1119,16 +1224,16 @@ function aplicarPreset(
 
 
 // =========================================
-// COPIAR
+// COPY
 // =========================================
 
 copyButton.addEventListener(
     "click",
-    async function () {
+    async () => {
 
         if (!currentText) {
 
-            mostrarStatus(
+            setStatus(
                 "NÃO HÁ TEXTO PARA COPIAR",
                 true
             );
@@ -1145,25 +1250,25 @@ copyButton.addEventListener(
             );
 
 
-            const oldText =
+            const original =
                 copyButton.textContent;
 
 
             copyButton.textContent =
-                "COPIADO!";
+                "COPIADO";
 
 
-            mostrarStatus(
-                "TEXTO COPIADO",
+            setStatus(
+                "TEXTO COPIADO PARA A ÁREA DE TRANSFERÊNCIA",
                 false
             );
 
 
             setTimeout(
-                function () {
+                () => {
 
                     copyButton.textContent =
-                        oldText;
+                        original;
 
                 },
                 1200
@@ -1171,9 +1276,9 @@ copyButton.addEventListener(
 
         }
 
-        catch (error) {
+        catch {
 
-            copiarFallback();
+            fallbackCopy();
 
         }
 
@@ -1185,7 +1290,7 @@ copyButton.addEventListener(
 // FALLBACK COPY
 // =========================================
 
-function copiarFallback() {
+function fallbackCopy() {
 
     const textarea =
         document.createElement(
@@ -1219,16 +1324,16 @@ function copiarFallback() {
         );
 
 
-        mostrarStatus(
+        setStatus(
             "TEXTO COPIADO",
             false
         );
 
     }
 
-    catch (error) {
+    catch {
 
-        mostrarStatus(
+        setStatus(
             "NÃO FOI POSSÍVEL COPIAR",
             true
         );
@@ -1236,25 +1341,23 @@ function copiarFallback() {
     }
 
 
-    document.body.removeChild(
-        textarea
-    );
+    textarea.remove();
 
 }
 
 
 // =========================================
-// DOWNLOAD TXT
+// DOWNLOAD
 // =========================================
 
 downloadButton.addEventListener(
     "click",
-    function () {
+    () => {
 
         if (!currentText) {
 
-            mostrarStatus(
-                "NÃO HÁ TEXTO PARA BAIXAR",
+            setStatus(
+                "NÃO HÁ TEXTO PARA EXPORTAR",
                 true
             );
 
@@ -1295,17 +1398,7 @@ downloadButton.addEventListener(
             "galactus-text-art.txt";
 
 
-        document.body.appendChild(
-            link
-        );
-
-
         link.click();
-
-
-        document.body.removeChild(
-            link
-        );
 
 
         URL.revokeObjectURL(
@@ -1313,7 +1406,7 @@ downloadButton.addEventListener(
         );
 
 
-        mostrarStatus(
+        setStatus(
             "ARQUIVO TXT GERADO",
             false
         );
@@ -1323,12 +1416,12 @@ downloadButton.addEventListener(
 
 
 // =========================================
-// LIMPAR
+// CLEAR
 // =========================================
 
 clearButton.addEventListener(
     "click",
-    function () {
+    () => {
 
         image = null;
 
@@ -1348,14 +1441,6 @@ clearButton.addEventListener(
 
 
         originalEmpty.style.display =
-            "flex";
-
-
-        miniOutput.textContent =
-            "";
-
-
-        miniEmpty.style.display =
             "flex";
 
 
@@ -1379,11 +1464,7 @@ clearButton.addEventListener(
             "0 caracteres";
 
 
-        previewType.textContent =
-            "DOTS";
-
-
-        mostrarStatus(
+        setStatus(
             "PROJETO LIMPO",
             false
         );
@@ -1393,12 +1474,35 @@ clearButton.addEventListener(
 
 
 // =========================================
+// STATS
+// =========================================
+
+function updateStats(text) {
+
+    const lines =
+        text.split("\n").length - 1;
+
+
+    const characters =
+        text.replace(
+            /\n/g,
+            ""
+        ).length;
+
+
+    resultStats.textContent =
+        `${characters.toLocaleString("pt-BR")} caracteres • ${lines} linhas`;
+
+}
+
+
+// =========================================
 // STATUS
 // =========================================
 
-function mostrarStatus(
+function setStatus(
     message,
-    error
+    error = false
 ) {
 
     status.textContent =
@@ -1406,35 +1510,40 @@ function mostrarStatus(
 
 
     status.classList.toggle(
-        "success",
+        "ok",
         !error
+    );
+
+
+    status.classList.toggle(
+        "error",
+        error
     );
 
 }
 
 
 // =========================================
-// TAMANHO DO ARQUIVO
+// FILE SIZE
 // =========================================
 
-function formatBytes(
-    bytes
-) {
+function formatBytes(bytes) {
 
-    if (bytes === 0) {
+    if (
+        bytes === 0
+    ) {
 
         return "0 B";
 
     }
 
 
-    const units =
-        [
-            "B",
-            "KB",
-            "MB",
-            "GB"
-        ];
+    const units = [
+        "B",
+        "KB",
+        "MB",
+        "GB"
+    ];
 
 
     const index =
@@ -1458,91 +1567,12 @@ function formatBytes(
 
 
 // =========================================
-// ESTATÍSTICAS
+// INIT
 // =========================================
 
-function atualizarEstatisticas(
-    text
-) {
+updateValues();
 
-    const characters =
-        text.length;
-
-
-    const lines =
-        text.split("\n").length - 1;
-
-
-    const visibleCharacters =
-        text.replace(
-            /\n/g,
-            ""
-        ).length;
-
-
-    resultStats.textContent =
-        `${visibleCharacters.toLocaleString("pt-BR")} caracteres • ${lines} linhas`;
-
-}
-
-
-// =========================================
-// ATALHOS
-// =========================================
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        // CTRL + V
-        if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "v"
-        ) {
-
-            /*
-                O navegador trata o Ctrl+V
-                normalmente. Não interferimos.
-            */
-
-        }
-
-
-        // CTRL + C
-        if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "c"
-        ) {
-
-            /*
-                Não interceptamos porque
-                o usuário pode copiar texto
-                normalmente.
-            */
-
-        }
-
-
-        // ESC
-        if (
-            event.key === "Escape"
-        ) {
-
-            /*
-                ESC limpa o foco de inputs.
-            */
-
-            document.activeElement.blur();
-
-        }
-
-    }
+setStatus(
+    "SISTEMA PRONTO",
+    false
 );
-
-
-// =========================================
-// INICIALIZAÇÃO
-// =========================================
-
-atualizarValores();
-

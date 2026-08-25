@@ -10,12 +10,12 @@
 
 
 /* =========================================
-   ROOT
+   VARIABLES
 ========================================= */
 
 :root {
 
-    --background: #080808;
+    --bg: #080808;
 
     --surface: #101010;
 
@@ -23,15 +23,15 @@
 
     --border: #252525;
 
-    --border-light: #3d3d3d;
+    --border-light: #3b3b3b;
 
     --text: #ffffff;
 
     --muted: #777777;
 
-    --dark-muted: #3f3f3f;
+    --dark: #3d3d3d;
 
-    --transition: 0.2s ease;
+    --transition: .2s ease;
 
 }
 
@@ -44,13 +44,11 @@ body {
 
     min-height: 100vh;
 
-    padding: 40px 25px;
+    padding: 35px 20px;
 
-    background:
-        var(--background);
+    background: var(--bg);
 
-    color:
-        var(--text);
+    color: var(--text);
 
     font-family:
         Arial,
@@ -68,7 +66,7 @@ body {
 
     width: 100%;
 
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: auto;
 
@@ -87,52 +85,87 @@ body {
 
     align-items: flex-start;
 
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 
 }
 
 
-.brand {
+.brand-area h1 {
 
-    font-size: 38px;
+    font-size: 36px;
 
-    line-height: 0.87;
-
-    font-weight: 800;
+    line-height: .9;
 
     letter-spacing: 4px;
 
 }
 
 
-.subtitle {
+.brand-area h1 span {
 
-    margin-top: 15px;
+    display: block;
 
-    color:
-        var(--muted);
+}
 
-    font-size: 9px;
 
-    line-height: 1.5;
+.brand-area p {
 
-    letter-spacing: 1.5px;
+    margin-top: 14px;
+
+    color: var(--muted);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
 
 }
 
 
 .version {
 
-    color:
-        #444;
+    color: #333;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 9px;
+    font-size: 8px;
 
     letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   WORKSPACE
+========================================= */
+
+.workspace {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.2fr)
+        minmax(350px, .8fr);
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* =========================================
+   LEFT
+========================================= */
+
+.left-column {
+
+    min-width: 0;
 
 }
 
@@ -143,20 +176,18 @@ body {
 
 .upload-section {
 
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 
 }
 
 
 .upload-box {
 
-    width: 100%;
-
-    min-height: 130px;
+    min-height: 115px;
 
     border:
         1px dashed
-        #363636;
+        #333;
 
     display: flex;
 
@@ -174,33 +205,23 @@ body {
 }
 
 
-.upload-box:hover {
-
-    background:
-        #0d0d0d;
-
-    border-color:
-        #888;
-
-}
-
-
+.upload-box:hover,
 .upload-box.dragging {
 
-    background:
-        #121212;
+    background: #101010;
 
-    border-color:
-        white;
+    border-color: #777;
 
 }
 
 
-.upload-icon {
+.upload-plus {
 
-    width: 32px;
+    width: 30px;
 
-    height: 32px;
+    height: 30px;
+
+    margin-bottom: 9px;
 
     border:
         1px solid
@@ -208,42 +229,35 @@ body {
 
     display: flex;
 
-    align-items: center;
-
     justify-content: center;
 
-    color:
-        #777;
+    align-items: center;
 
-    font-size: 20px;
+    color: #777;
 
-    margin-bottom: 10px;
+    font-size: 18px;
 
 }
 
 
-.upload-title {
+.upload-box strong {
 
-    color:
-        #888;
+    color: #777;
 
-    font-size: 10px;
-
-    font-weight: bold;
+    font-size: 9px;
 
     letter-spacing: 2px;
 
 }
 
 
-.upload-subtitle {
+.upload-box span {
 
     margin-top: 6px;
 
-    color:
-        #3d3d3d;
+    color: #3d3d3d;
 
-    font-size: 8px;
+    font-size: 7px;
 
     letter-spacing: 1px;
 
@@ -252,10 +266,9 @@ body {
 
 .file-info {
 
-    margin-top: 8px;
+    margin-top: 7px;
 
-    color:
-        #444;
+    color: #444;
 
     font-family:
         "Courier New",
@@ -263,90 +276,65 @@ body {
 
     font-size: 8px;
 
-    letter-spacing: 1px;
-
     overflow: hidden;
 
-    text-overflow: ellipsis;
-
     white-space: nowrap;
+
+    text-overflow: ellipsis;
 
 }
 
 
 /* =========================================
-   PREVIEW
+   PREVIEW PANEL
 ========================================= */
 
-.preview-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 1px;
-
-    margin-bottom: 18px;
-
-    background:
-        var(--border);
+.preview-panel {
 
     border:
         1px solid
         var(--border);
 
-}
-
-
-.panel {
-
-    background:
-        var(--surface);
-
-    min-width: 0;
+    background: #050505;
 
 }
 
 
-.panel-header {
+.panel-title {
 
     height: 42px;
 
-    padding:
-        0 14px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
+    padding: 0 13px;
 
     border-bottom:
         1px solid
         var(--border);
 
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
 }
 
 
-.panel-header span:first-child {
+.panel-title span:first-child {
 
-    color:
-        #777;
+    color: #777;
 
-    font-size: 9px;
+    font-size: 8px;
 
     font-weight: bold;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
 
 }
 
 
-.panel-header span:last-child {
+.panel-title span:last-child {
 
-    color:
-        #444;
+    color: #444;
 
     font-family:
         "Courier New",
@@ -357,13 +345,9 @@ body {
 }
 
 
-/* =========================================
-   ORIGINAL PREVIEW
-========================================= */
+.image-preview {
 
-.original-preview {
-
-    height: 300px;
+    height: 590px;
 
     position: relative;
 
@@ -375,13 +359,12 @@ body {
 
     overflow: hidden;
 
-    background:
-        #050505;
+    background: #020202;
 
 }
 
 
-.original-preview::before {
+.image-preview::before {
 
     content: "";
 
@@ -389,21 +372,20 @@ body {
 
     inset: 0;
 
-    opacity: 0.12;
+    opacity: .08;
 
     background-image:
         linear-gradient(
-            #555 1px,
+            #888 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            #555 1px,
+            #888 1px,
             transparent 1px
         );
 
-    background-size:
-        20px 20px;
+    background-size: 20px 20px;
 
 }
 
@@ -418,53 +400,9 @@ body {
 
     max-height: 100%;
 
-    object-fit: contain;
-
     display: none;
 
-}
-
-
-/* =========================================
-   MINI PREVIEW
-========================================= */
-
-.mini-preview {
-
-    height: 300px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    background:
-        #000;
-
-}
-
-
-#miniOutput {
-
-    width: 100%;
-
-    height: 100%;
-
-    padding: 15px;
-
-    overflow: hidden;
-
-    color:
-        white;
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 5px;
-
-    line-height: 1;
-
-    white-space: pre;
+    object-fit: contain;
 
 }
 
@@ -473,7 +411,7 @@ body {
    EMPTY
 ========================================= */
 
-.empty-preview {
+.empty-state {
 
     position: absolute;
 
@@ -483,26 +421,71 @@ body {
 
     flex-direction: column;
 
-    align-items: center;
-
     justify-content: center;
 
-    color:
-        #333;
+    align-items: center;
+
+    color: #333;
 
 }
 
 
-.empty-preview span {
+.empty-state span {
 
-    font-size: 26px;
+    font-size: 28px;
 
 }
 
 
-.empty-preview small {
+.empty-state small {
 
     margin-top: 8px;
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   RIGHT
+========================================= */
+
+.right-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+
+    padding: 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        var(--surface);
+
+}
+
+
+.card-title {
+
+    margin-bottom: 14px;
+
+    color: #555;
 
     font-size: 8px;
 
@@ -517,56 +500,32 @@ body {
    PRESETS
 ========================================= */
 
-.preset-section {
+.presets {
 
-    margin-bottom: 18px;
+    display: grid;
 
-}
+    grid-template-columns:
+        repeat(4, 1fr);
 
-
-.section-title {
-
-    margin-bottom: 8px;
-
-    color:
-        #555;
-
-    font-size: 9px;
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-
-}
-
-
-.preset-list {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 6px;
+    gap: 5px;
 
 }
 
 
 .preset {
 
-    padding:
-        9px 13px;
+    min-height: 32px;
 
     border:
         1px solid
         #292929;
 
     background:
-        #0d0d0d;
+        #0b0b0b;
 
-    color:
-        #666;
+    color: #555;
 
-    font-size: 8px;
+    font-size: 7px;
 
     font-weight: bold;
 
@@ -582,116 +541,20 @@ body {
 
 .preset:hover {
 
-    color:
-        white;
+    border-color: #777;
 
-    border-color:
-        #666;
+    color: white;
 
 }
 
 
 .preset.active {
 
-    background:
-        white;
+    background: white;
 
-    color:
-        black;
+    color: black;
 
-    border-color:
-        white;
-
-}
-
-
-/* =========================================
-   CONTROLS
-========================================= */
-
-.controls {
-
-    display: grid;
-
-    grid-template-columns:
-        100px
-        150px
-        repeat(4, 1fr)
-        repeat(2, 1fr)
-        140px
-        80px;
-
-    gap: 1px;
-
-    margin-bottom: 18px;
-
-    background:
-        var(--border);
-
-    border:
-        1px solid
-        var(--border);
-
-}
-
-
-.control {
-
-    min-width: 0;
-
-    min-height: 100px;
-
-    padding: 15px;
-
-    background:
-        var(--surface);
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    gap: 12px;
-
-}
-
-
-.control label {
-
-    color:
-        #777;
-
-    font-size: 8px;
-
-    font-weight: bold;
-
-    letter-spacing: 1.4px;
-
-}
-
-
-.control-top {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-}
-
-
-.control-top span {
-
-    color:
-        #aaa;
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 9px;
+    border-color: white;
 
 }
 
@@ -700,46 +563,71 @@ body {
    CHARACTER
 ========================================= */
 
+.character-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        70px 1fr;
+
+    gap: 10px;
+
+}
+
+
+.field {
+
+    min-width: 0;
+
+}
+
+
+.field label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #666;
+
+    font-size: 7px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.3px;
+
+}
+
+
 #character {
 
     width: 50px;
 
-    height: 38px;
+    height: 36px;
 
-    background:
-        #080808;
+    background: #080808;
 
     border:
         1px solid
         #333;
 
-    color:
-        white;
+    color: white;
 
     outline: none;
 
     text-align: center;
 
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 20px;
+    font-size: 19px;
 
 }
 
 
 #character:focus {
 
-    border-color:
-        #777;
+    border-color: #777;
 
 }
 
-
-/* =========================================
-   SELECT
-========================================= */
 
 select {
 
@@ -747,18 +635,15 @@ select {
 
     height: 36px;
 
-    padding:
-        0 8px;
+    padding: 0 8px;
 
-    background:
-        #080808;
+    background: #080808;
 
     border:
         1px solid
         #333;
 
-    color:
-        white;
+    color: white;
 
     outline: none;
 
@@ -769,8 +654,7 @@ select {
 
 select:focus {
 
-    border-color:
-        #777;
+    border-color: #777;
 
 }
 
@@ -778,6 +662,59 @@ select:focus {
 /* =========================================
    RANGE
 ========================================= */
+
+.range-field {
+
+    margin-bottom: 13px;
+
+}
+
+
+.range-field:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.range-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 9px;
+
+}
+
+
+.range-header label {
+
+    color: #666;
+
+    font-size: 7px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.3px;
+
+}
+
+
+.range-header span {
+
+    color: #aaa;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+}
+
 
 input[type="range"] {
 
@@ -787,8 +724,7 @@ input[type="range"] {
 
     appearance: none;
 
-    background:
-        #333;
+    background: #303030;
 
     outline: none;
 
@@ -807,8 +743,7 @@ input[type="range"]::-webkit-slider-thumb {
 
     border-radius: 50%;
 
-    background:
-        white;
+    background: white;
 
 }
 
@@ -819,12 +754,123 @@ input[type="range"]::-moz-range-thumb {
 
     height: 11px;
 
-    border: none;
+    border: 0;
 
     border-radius: 50%;
 
+    background: white;
+
+}
+
+
+/* =========================================
+   QUICK WIDTH
+========================================= */
+
+.quick-width {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 4px;
+
+    margin-bottom: 14px;
+
+}
+
+
+.quick-width button {
+
+    height: 26px;
+
+    border:
+        1px solid
+        #292929;
+
     background:
-        white;
+        #0b0b0b;
+
+    color: #555;
+
+    font-size: 7px;
+
+    cursor: pointer;
+
+}
+
+
+.quick-width button:hover {
+
+    color: white;
+
+    border-color: #666;
+
+}
+
+
+/* =========================================
+   SELECT ROW
+========================================= */
+
+.select-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+}
+
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.options-card {
+
+    padding:
+        10px 15px;
+
+}
+
+
+.option {
+
+    min-height: 34px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid
+        #191919;
+
+}
+
+
+.option:last-child {
+
+    border-bottom: 0;
+
+}
+
+
+.option > span {
+
+    color: #666;
+
+    font-size: 7px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
 
 }
 
@@ -833,20 +879,13 @@ input[type="range"]::-moz-range-thumb {
    SWITCH
 ========================================= */
 
-.toggle-control {
-
-    align-items: center;
-
-}
-
-
 .switch {
 
+    width: 34px;
+
+    height: 18px;
+
     position: relative;
-
-    width: 38px;
-
-    height: 20px;
 
     cursor: pointer;
 
@@ -866,12 +905,12 @@ input[type="range"]::-moz-range-thumb {
 
     inset: 0;
 
-    background:
-        #222;
-
     border:
         1px solid
-        #444;
+        #3a3a3a;
+
+    background:
+        #181818;
 
 }
 
@@ -882,16 +921,15 @@ input[type="range"]::-moz-range-thumb {
 
     position: absolute;
 
-    width: 12px;
+    width: 10px;
 
-    height: 12px;
+    height: 10px;
 
     top: 3px;
 
     left: 3px;
 
-    background:
-        #777;
+    background: #666;
 
     transition:
         var(--transition);
@@ -899,21 +937,12 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
-.switch input:checked + span {
-
-    background:
-        #444;
-
-}
-
-
 .switch input:checked + span::before {
 
     transform:
-        translateX(18px);
+        translateX(16px);
 
-    background:
-        white;
+    background: white;
 
 }
 
@@ -928,18 +957,17 @@ input[type="range"]::-moz-range-thumb {
         1px solid
         var(--border);
 
-    background:
-        #050505;
+    background: #050505;
 
 }
 
 
 .result-header {
 
-    min-height: 58px;
+    min-height: 55px;
 
     padding:
-        10px 15px;
+        10px 14px;
 
     display: flex;
 
@@ -947,44 +975,39 @@ input[type="range"]::-moz-range-thumb {
 
     align-items: center;
 
-    gap: 15px;
-
-    background:
-        #101010;
+    gap: 10px;
 
     border-bottom:
         1px solid
         var(--border);
 
+    background: #101010;
+
 }
 
 
-.result-title {
+.result-header strong {
 
-    color:
-        #777;
+    color: #777;
 
-    font-size: 9px;
-
-    font-weight: bold;
+    font-size: 8px;
 
     letter-spacing: 2px;
 
 }
 
 
-.result-stats {
+#resultStats {
 
-    margin-left: 12px;
+    margin-left: 10px;
 
-    color:
-        #444;
+    color: #444;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 8px;
+    font-size: 7px;
 
 }
 
@@ -993,15 +1016,19 @@ input[type="range"]::-moz-range-thumb {
 
     display: flex;
 
-    gap: 6px;
+    gap: 5px;
 
 }
 
 
 .button {
 
+    min-width: 60px;
+
+    height: 30px;
+
     padding:
-        9px 13px;
+        0 10px;
 
     border:
         1px solid
@@ -1010,10 +1037,9 @@ input[type="range"]::-moz-range-thumb {
     background:
         transparent;
 
-    color:
-        white;
+    color: #aaa;
 
-    font-size: 8px;
+    font-size: 7px;
 
     font-weight: bold;
 
@@ -1021,33 +1047,32 @@ input[type="range"]::-moz-range-thumb {
 
     cursor: pointer;
 
-    transition:
-        var(--transition);
-
 }
 
 
 .button:hover {
 
-    border-color:
-        #888;
+    border-color: #777;
 
-    background:
-        #181818;
+    color: white;
+
+}
+
+
+.button.primary {
+
+    background: white;
+
+    color: black;
+
+    border-color: white;
 
 }
 
 
 .button.primary:hover {
 
-    background:
-        white;
-
-    color:
-        black;
-
-    border-color:
-        white;
+    background: #ddd;
 
 }
 
@@ -1056,14 +1081,15 @@ input[type="range"]::-moz-range-thumb {
    OUTPUT
 ========================================= */
 
-.output-container {
+.output-wrapper {
 
-    min-height: 460px;
+    min-height: 480px;
 
     position: relative;
 
-    background:
-        #000;
+    overflow: hidden;
+
+    background: #000;
 
 }
 
@@ -1072,20 +1098,17 @@ input[type="range"]::-moz-range-thumb {
 
     width: 100%;
 
-    min-height: 460px;
+    height: 480px;
 
     padding: 25px;
 
     overflow: auto;
 
-    background:
-        transparent;
-
-    color:
-        white;
+    color: white;
 
     font-family:
         "Courier New",
+        Courier,
         monospace;
 
     font-size: 8px;
@@ -1111,28 +1134,25 @@ input[type="range"]::-moz-range-thumb {
 
     align-items: center;
 
+    color: #333;
+
     pointer-events: none;
 
-    color:
-        #333;
+}
+
+
+.output-empty span {
+
+    font-size: 28px;
 
 }
 
 
-.output-empty div {
+.output-empty strong {
 
-    font-size: 30px;
+    margin-top: 9px;
 
-}
-
-
-.output-empty p {
-
-    margin-top: 10px;
-
-    font-size: 9px;
-
-    font-weight: bold;
+    font-size: 8px;
 
     letter-spacing: 2px;
 
@@ -1143,10 +1163,11 @@ input[type="range"]::-moz-range-thumb {
 
     margin-top: 6px;
 
-    color:
-        #222;
+    color: #252525;
 
-    font-size: 8px;
+    font-size: 7px;
+
+    letter-spacing: 1px;
 
 }
 
@@ -1157,26 +1178,31 @@ input[type="range"]::-moz-range-thumb {
 
 .status {
 
-    margin-top: 10px;
+    margin-top: 9px;
 
-    color:
-        #444;
+    color: #3d3d3d;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 8px;
+    font-size: 7px;
 
     letter-spacing: 1px;
 
 }
 
 
-.status.success {
+.status.ok {
 
-    color:
-        #777;
+    color: #777;
+
+}
+
+
+.status.error {
+
+    color: #999;
 
 }
 
@@ -1185,11 +1211,11 @@ input[type="range"]::-moz-range-thumb {
    FOOTER
 ========================================= */
 
-.footer {
+footer {
 
     margin-top: 20px;
 
-    padding-top: 14px;
+    padding-top: 13px;
 
     border-top:
         1px solid
@@ -1199,14 +1225,13 @@ input[type="range"]::-moz-range-thumb {
 
     justify-content: space-between;
 
-    color:
-        #333;
+    color: #303030;
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 8px;
+    font-size: 7px;
 
     letter-spacing: 1px;
 
@@ -1228,24 +1253,21 @@ input[type="range"]::-moz-range-thumb {
 
 #output::-webkit-scrollbar-track {
 
-    background:
-        #080808;
+    background: #080808;
 
 }
 
 
 #output::-webkit-scrollbar-thumb {
 
-    background:
-        #292929;
+    background: #292929;
 
 }
 
 
 #output::-webkit-scrollbar-thumb:hover {
 
-    background:
-        #444;
+    background: #444;
 
 }
 
@@ -1254,67 +1276,18 @@ input[type="range"]::-moz-range-thumb {
    TABLET
 ========================================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 900px) {
 
-    .controls {
+    .workspace {
 
-        grid-template-columns:
-            repeat(4, 1fr);
-
-    }
-
-}
-
-
-/* =========================================
-   TABLET SMALL
-========================================= */
-
-@media (max-width: 750px) {
-
-    body {
-
-        padding:
-            30px 15px;
+        grid-template-columns: 1fr;
 
     }
 
 
-    .preview-grid {
+    .image-preview {
 
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .controls {
-
-        grid-template-columns:
-            1fr 1fr;
-
-    }
-
-
-    .result-header {
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-    }
-
-
-    .actions {
-
-        width: 100%;
-
-    }
-
-
-    .button {
-
-        flex: 1;
+        height: 400px;
 
     }
 
@@ -1325,7 +1298,7 @@ input[type="range"]::-moz-range-thumb {
    MOBILE
 ========================================= */
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
 
     body {
 
@@ -1337,12 +1310,12 @@ input[type="range"]::-moz-range-thumb {
 
     .header {
 
-        margin-bottom: 25px;
+        margin-bottom: 22px;
 
     }
 
 
-    .brand {
+    .brand-area h1 {
 
         font-size: 28px;
 
@@ -1358,42 +1331,49 @@ input[type="range"]::-moz-range-thumb {
     }
 
 
-    .controls {
+    .presets {
 
         grid-template-columns:
-            1fr;
+            repeat(2, 1fr);
 
     }
 
 
-    .control {
+    .character-grid {
 
-        min-height: 85px;
-
-    }
-
-
-    .original-preview,
-    .mini-preview {
-
-        height: 240px;
+        grid-template-columns:
+            60px 1fr;
 
     }
 
 
-    .output-container,
-    #output {
+    .select-row {
 
-        min-height: 350px;
+        grid-template-columns: 1fr;
 
     }
 
 
-    #output {
+    .quick-width {
 
-        padding: 15px;
+        grid-template-columns:
+            repeat(3, 1fr);
 
-        font-size: 6px;
+    }
+
+
+    .image-preview {
+
+        height: 320px;
+
+    }
+
+
+    .result-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
 
     }
 
@@ -1403,20 +1383,37 @@ input[type="range"]::-moz-range-thumb {
         display: grid;
 
         grid-template-columns:
-            1fr 1fr;
+            1fr 1fr 1fr;
 
     }
 
 
-    .button:last-child {
+    .button {
 
-        grid-column:
-            span 2;
+        width: 100%;
 
     }
 
 
-    .footer {
+    .output-wrapper {
+
+        min-height: 350px;
+
+    }
+
+
+    #output {
+
+        height: 350px;
+
+        padding: 15px;
+
+        font-size: 6px;
+
+    }
+
+
+    footer {
 
         flex-direction: column;
 
